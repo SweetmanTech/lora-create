@@ -1,4 +1,5 @@
 import CreateButton from '../CreateButton'
+import Points from '../Points'
 
 const LandingPage = () => (
   <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
@@ -10,6 +11,7 @@ const LandingPage = () => (
       <div className="mt-6">
         <CreateButton />
       </div>
+      <Points />
     </div>
   </div>
 )
