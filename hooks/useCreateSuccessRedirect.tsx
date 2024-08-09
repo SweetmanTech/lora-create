@@ -1,13 +1,10 @@
-import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { Log, parseEventLogs } from 'viem'
+import { parseEventLogs } from 'viem'
 import { useCallsStatus } from 'wagmi/experimental'
 import { zoraCreator1155FactoryImplABI } from '@zoralabs/protocol-deployments'
 
 const useCreateSuccessRedirect = (callsStatusId?: string) => {
-  const { push } = useRouter()
-
   const { data: callsStatus } = useCallsStatus({
     id: callsStatusId as string,
     query: {
@@ -18,13 +15,11 @@ const useCreateSuccessRedirect = (callsStatusId?: string) => {
 
   useEffect(() => {
     if (callsStatus?.status !== 'CONFIRMED') return
-    console.log('SWEETS callsStatus', callsStatus)
     const logs = parseEventLogs({
       abi: zoraCreator1155FactoryImplABI,
-      logs: callsStatus.receipts?.[0]?.logs as Log[],
+      logs: callsStatus.receipts?.[0]?.logs as any[],
     }) as any
-    console.log('SWEETS logs', logs)
-    const { newContract } = logs?.[1]?.args
+    const { newContract } = logs?.[1]?.args as any
     toast.success('Project Created Successfully!')
     window.open(`https://testnet.zora.co/collect/bsep:${newContract}/1`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
