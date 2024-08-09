@@ -1,13 +1,18 @@
 'use client'
 
-import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
+import { useAccount, usePublicClient } from 'wagmi'
+import { useWriteContracts } from 'wagmi/experimental'
 import { createCreatorClient } from '@zoralabs/protocol-sdk'
-import { CHAIN_ID } from '@/lib/consts'
+import { CHAIN_ID, REFERRAL_RECIPIENT } from '@/lib/consts'
+import { usePaymasterProvider } from '@/providers/PaymasterProvider'
+import useCreateSuccessRedirect from './useCreateSuccessRedirect'
 
 const useZoraCreate = () => {
   const publicClient = usePublicClient()!
   const { address } = useAccount()
-  const { writeContractAsync } = useWriteContract()
+  const { capabilities } = usePaymasterProvider()
+  const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
+  useCreateSuccessRedirect(callsStatusId)
 
   const create = async () => {
     try {
@@ -20,6 +25,7 @@ const useZoraCreate = () => {
         },
         token: {
           tokenMetadataURI: cc0MusicIpfsHash,
+          createReferral: REFERRAL_RECIPIENT,
           salesConfig: {
             erc20Name: 'CC0 Music',
             erc20Symbol: 'CC0',
@@ -28,8 +34,10 @@ const useZoraCreate = () => {
         account: address!,
       })
       const newParameters = { ...parameters, functionName: 'createContract' }
-      const tx = await writeContractAsync(newParameters as any)
-      console.log('SWEETS tx', tx)
+      await writeContractsAsync({
+        contracts: [{ ...(newParameters as any) }],
+        capabilities,
+      } as any)
     } catch (err) {
       console.error(err)
     }
