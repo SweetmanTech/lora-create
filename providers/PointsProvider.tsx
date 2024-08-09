@@ -1,14 +1,14 @@
 'use client'
 
-import useLoginPoints from '@/hooks/useLoginPoints'
+import usePoints from '@/hooks/usePoints'
 import React, { createContext, useContext, useMemo } from 'react'
 
 const PointsContext = createContext(undefined)
 
 const PointsProvider = ({ children }: any) => {
-  const { events: loginEvents } = useLoginPoints()
+  const points = usePoints()
 
-  const value = useMemo(() => ({ loginEvents }), [loginEvents])
+  const value = useMemo(() => ({ ...points }), [points])
 
   return <PointsContext.Provider value={value}>{children}</PointsContext.Provider>
 }
