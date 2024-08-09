@@ -11,6 +11,6 @@ export const DROP_ADDRESS = IS_TESTNET
 
 export const ZORA_PRICE = '777000000000000'
 
-export const COMMENT = 'XCELENCIA - ERC6551 smart album 🪄'
+export const COMMENT = 'myco.wtf'
 export const FIRST_SMART_WALLET_LOGIN_EVENT = 'first_smart_wallet_login'
 export const SMART_WALLET_LOGIN_POINT = 11
