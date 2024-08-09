@@ -2,21 +2,15 @@
 
 import { useAccount } from 'wagmi'
 import DisconnectButton from './DisconnectButton'
-import { ConnectWallet, Wallet } from '@coinbase/onchainkit/wallet'
+import useConnectWallet from '@/hooks/useConnectWallet'
+import Button from '../Button'
 
 const LoginButton = () => {
   const { address } = useAccount()
+  const { connectWallet } = useConnectWallet()
 
   return (
-    <div>
-      {address ? (
-        <DisconnectButton />
-      ) : (
-        <Wallet>
-          <ConnectWallet className="bg-black hover:bg-white hover:text-black" />
-        </Wallet>
-      )}
-    </div>
+    <div>{address ? <DisconnectButton /> : <Button onClick={connectWallet}>Connect </Button>}</div>
   )
 }
 

@@ -1,5 +1,3 @@
-'use client'
-
 import wagmiConfig from '@/lib/wagmi/config'
 import { OnchainKitProvider } from '@coinbase/onchainkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'

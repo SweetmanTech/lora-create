@@ -1,5 +1,9 @@
+'use client'
+
 import WagmiProvider from './WagmiProvider'
 
-export default async function Providers({ children }: { children: React.ReactNode }) {
-  return <WagmiProvider>{children}</WagmiProvider>
-}
+const Providers = ({ children }: { children: React.ReactNode }) => (
+  <WagmiProvider>{children}</WagmiProvider>
+)
+
+export default Providers
