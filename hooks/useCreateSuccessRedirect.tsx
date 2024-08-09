@@ -20,7 +20,6 @@ const useCreateSuccessRedirect = (callsStatusId?: string) => {
       logs: callsStatus.receipts?.[0]?.logs as any[],
     }) as any
     const { newContract } = logs?.[1]?.args as any
-    console.log('SWEETS newContract', newContract)
     toast.success('Project Created Successfully!')
     const collectionUrl = `https://testnet.zora.co/collect/bsep:${newContract}/1`
     window.open(collectionUrl, '_blank').focus()
