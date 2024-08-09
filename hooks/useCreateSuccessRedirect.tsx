@@ -22,7 +22,7 @@ const useCreateSuccessRedirect = (callsStatusId?: string) => {
     const { newContract } = logs?.[1]?.args as any
     toast.success('Project Created Successfully!')
     const collectionUrl = `https://testnet.zora.co/collect/bsep:${newContract}/1`
-    window.open(collectionUrl, '_blank').focus()
+    window.open(collectionUrl, '_blank')
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callsStatus])
