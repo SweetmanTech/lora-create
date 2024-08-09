@@ -9,7 +9,6 @@ const usePoints = () => {
 
   const refetch = useCallback(async () => {
     const response = await getEvents(address)
-    console.log('SWEETS events', response)
     setEvents(response)
   }, [address])
 

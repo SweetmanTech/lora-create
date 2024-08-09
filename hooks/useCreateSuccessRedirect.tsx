@@ -26,7 +26,6 @@ const useCreateSuccessRedirect = (callsStatusId?: string) => {
       }) as any
       const { args } = logs?.[1] as any
       toast.success('Project Created Successfully!')
-      console.log('SWEETS TRACK THE EVENT WITH STACK', logs)
       await trackSetupNewContractPoints(address, args)
       await refetch()
     }
