@@ -35,6 +35,9 @@ module.exports = {
           DEFAULT: '#f2e8cd',
         },
       },
+      fontFamily: {
+        nounish: ['LondrinaSolid-Regular', 'sans-serif'],
+      },
     },
   },
   variants: {

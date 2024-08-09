@@ -13,7 +13,7 @@ const LoginButton = () => {
         <DisconnectButton />
       ) : (
         <Wallet>
-          <ConnectWallet />
+          <ConnectWallet className="bg-black hover:bg-white hover:text-black" />
         </Wallet>
       )}
     </div>
