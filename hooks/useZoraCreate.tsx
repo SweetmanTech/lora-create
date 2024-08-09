@@ -1,6 +1,6 @@
 'use client'
 
-import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
+import { useAccount, usePublicClient } from 'wagmi'
 import { useWriteContracts } from 'wagmi/experimental'
 import { createCreatorClient } from '@zoralabs/protocol-sdk'
 import { CHAIN_ID, REFERRAL_RECIPIENT } from '@/lib/consts'
