@@ -1,13 +1,14 @@
 'use client'
 
 import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
+import { useWriteContracts } from 'wagmi/experimental'
 import { createCreatorClient } from '@zoralabs/protocol-sdk'
 import { CHAIN_ID } from '@/lib/consts'
 
 const useZoraCreate = () => {
   const publicClient = usePublicClient()!
   const { address } = useAccount()
-  const { writeContractAsync } = useWriteContract()
+  const { writeContractsAsync } = useWriteContracts()
 
   const create = async () => {
     try {
@@ -28,7 +29,9 @@ const useZoraCreate = () => {
         account: address!,
       })
       const newParameters = { ...parameters, functionName: 'createContract' }
-      const tx = await writeContractAsync(newParameters as any)
+      const tx = await writeContractsAsync({
+        contracts: [{ ...(newParameters as any) }],
+      } as any)
       console.log('SWEETS tx', tx)
     } catch (err) {
       console.error(err)
