@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bubble-name {
+    position: absolute;
+    margin-top: 2rem;
+    max-width: 20rem;
+    --tw-translate-x: -0.5rem;
+    --tw-translate-y: calc(calc(100% + 3rem) * -1);
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    border-radius: 1rem;
+    border-width: 4px;
+    border-color: black;
+    background-color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 18px;
+    line-height: 120%;
+    font-weight: 500;
+    z-index: 30;
+}
+
+.bubble-name:after, .bubble-name:before {
+    content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: auto;
+    top: auto;
+}
+
+.bubble-name:after {
+    left: 23.5px;
+    bottom: -16.5px;
+    border-color: #fff transparent transparent #fff;
+    border-style: solid;
+    border-width: 12px;
+}
+
+.bubble-name:before {
+    left: 20px;
+    bottom: -26px;
+    border-color: #000 transparent transparent #000;
+    border-style: solid;
+    border-width: 12px;
+}
+
+.no_typecursor .Typewriter__cursor {
+    display: none;
+}

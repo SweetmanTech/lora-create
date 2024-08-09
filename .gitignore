@@ -1,0 +1,10 @@
+node_modules
+.DS_STORE
+.next/
+.env.local
+.env
+.vscode
+.idea
+yarn.lock
+package-lock.json
+supabase/config.toml
