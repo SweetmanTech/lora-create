@@ -1,4 +1,4 @@
-import Button from '../Button'
+import CreateButton from '../CreateButton'
 
 const LandingPage = () => (
   <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
@@ -8,7 +8,7 @@ const LandingPage = () => (
       </h1>
       <p className="mt-4 text-muted-foreground">✧111 + Uniswap V3 Pool✧</p>
       <div className="mt-6">
-        <Button className="bg-white hover:bg-black hover:text-white text-black p-3">create</Button>
+        <CreateButton />
       </div>
     </div>
   </div>
