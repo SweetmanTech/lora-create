@@ -20,6 +20,7 @@ const useCreateSuccessRedirect = (callsStatusId?: string) => {
       logs: callsStatus.receipts?.[0]?.logs as any[],
     }) as any
     const { newContract } = logs?.[1]?.args as any
+    console.log('SWEETS newContract', newContract)
     toast.success('Project Created Successfully!')
     window.open(`https://testnet.zora.co/collect/bsep:${newContract}/1`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
