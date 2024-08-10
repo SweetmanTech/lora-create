@@ -45,6 +45,7 @@ app.frame('/', (c) => {
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', borderRadius: '100px' }}>
+          {/* eslint-disable-next-line jsx-a11y/alt-text */}
           <Image
             borderRadius="128"
             src="https://ipfs.decentralized-content.com/ipfs/QmUryncU4ExZcHSJmfHj1J3uvMZqwuWTwCQ11GYsS9my6o"
@@ -52,6 +53,7 @@ app.frame('/', (c) => {
             height="128"
             objectFit="contain"
           />
+          {/* eslint-disable-next-line jsx-a11y/alt-text */}
           <Image
             borderRadius="128"
             src="https://ipfs.decentralized-content.com/ipfs/QmfQPBTHc9RwiaV21jqK1VWMYZYHJ15ZeRzFhSFgmFfMaV"
@@ -59,6 +61,7 @@ app.frame('/', (c) => {
             height="128"
             objectFit="contain"
           />
+          {/* eslint-disable-next-line jsx-a11y/alt-text */}
           <Image
             borderRadius="128"
             src="https://ipfs.decentralized-content.com/ipfs/QmUm7zDkuH8jq7mnVVPjgteubXvTQYHQXa7FoivyRLsE8t"
@@ -69,7 +72,10 @@ app.frame('/', (c) => {
         </div>
       </div>
     ),
-    intents: [<Button.Link href="https://create.myco.wtf">Create</Button.Link>],
+    intents: [
+      // eslint-disable-next-line react/jsx-key
+      <Button.Link href="https://create.myco.wtf">Create</Button.Link>,
+    ],
   })
 })
 
