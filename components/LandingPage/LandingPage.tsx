@@ -1,3 +1,5 @@
+'use client'
+
 import CreateButton from '../CreateButton'
 import Points from '../Points'
 
