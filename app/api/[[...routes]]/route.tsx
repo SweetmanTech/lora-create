@@ -37,7 +37,7 @@ app.frame('/', (c) => {
             Myco Create
           </Text>
           <Text color="gray100" size="12">
-            Publish on Base with the Zora&apos;s Protocols
+            Publish on Base with Zora&apos;s Protocols
           </Text>
           <Text size="32" color="gray100">
             create.myco.wtf
