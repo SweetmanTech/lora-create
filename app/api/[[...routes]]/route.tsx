@@ -10,6 +10,7 @@ const { Text, Image, vars } = createSystem()
 const app = new Frog({
   basePath: '/api',
   ui: { vars },
+  browserLocation: '/',
   title: 'Myco Create',
 })
 

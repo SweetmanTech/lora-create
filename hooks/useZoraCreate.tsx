@@ -6,6 +6,7 @@ import { createCreatorClient } from '@zoralabs/protocol-sdk'
 import { CHAIN_ID, REFERRAL_RECIPIENT } from '@/lib/consts'
 import { usePaymasterProvider } from '@/providers/PaymasterProvider'
 import useCreateSuccessRedirect from './useCreateSuccessRedirect'
+import useConnectWallet from './useConnectWallet'
 
 const useZoraCreate = () => {
   const publicClient = usePublicClient()!
@@ -13,9 +14,11 @@ const useZoraCreate = () => {
   const { capabilities } = usePaymasterProvider()
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
   useCreateSuccessRedirect(callsStatusId)
+  const { connectWallet } = useConnectWallet()
 
   const create = async () => {
     try {
+      if (!address) await connectWallet()
       const creatorClient = createCreatorClient({ chainId: CHAIN_ID, publicClient })
       const cc0MusicIpfsHash = 'ipfs://bafkreiazqdg6qc3j6yjcxyhvoyaspmjjwal5wvywjs66jobb3pbzknvzxu'
       const { parameters } = await creatorClient.create1155({
