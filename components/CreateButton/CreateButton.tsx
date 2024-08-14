@@ -7,7 +7,10 @@ const CreateButton = () => {
   const { create } = useZoraCreate()
 
   return (
-    <Button onClick={create} className="bg-white hover:bg-black hover:text-white text-black p-3">
+    <Button
+      onClick={create}
+      className="bg-white text-black p-3 transform hover:scale-105 transition-transform duration-150 hover:shadow-lg"
+    >
       create
     </Button>
   )
