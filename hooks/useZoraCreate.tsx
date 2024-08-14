@@ -37,7 +37,6 @@ const useZoraCreate = () => {
         },
         account: address!,
       })
-      console.log('SWEETS parameters', parameters)
       const newParameters = { ...parameters, functionName: 'createContract' }
       await writeContractsAsync({
         contracts: [{ ...(newParameters as any) }],
