@@ -1,10 +1,10 @@
 'use client'
 
-import useZoraCreate from '@/hooks/useZoraCreate'
 import Button from '../Button'
+import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 
 const CreateButton = () => {
-  const { create } = useZoraCreate()
+  const { create } = useZoraCreateProvider()
 
   return (
     <Button
