@@ -11,7 +11,7 @@ const CreateButton = () => {
       onClick={create}
       className="bg-white text-black p-3 transform hover:scale-105 transition-transform duration-150 hover:shadow-lg"
     >
-      create
+      preview
     </Button>
   )
 }
