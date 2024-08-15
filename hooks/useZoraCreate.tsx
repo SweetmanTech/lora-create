@@ -17,6 +17,7 @@ const useZoraCreate = () => {
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
   useCreateSuccessRedirect(callsStatusId)
   const { connectWallet } = useConnectWallet()
+  const [name, setName] = useState<string>('CC0 Music')
   const [saleStrategy, setSaleStrategy] = useState<string>('ZoraTimedSaleStrategy')
 
   const create = async () => {
@@ -27,7 +28,7 @@ const useZoraCreate = () => {
       const salesConfig = getSalesConfig(saleStrategy)
       const { parameters } = await creatorClient.create1155({
         contract: {
-          name: 'CC0 Music',
+          name,
           uri: cc0MusicIpfsHash,
         },
         token: {
@@ -47,7 +48,7 @@ const useZoraCreate = () => {
     }
   }
 
-  return { create, saleStrategy, setSaleStrategy }
+  return { create, name, setName, saleStrategy, setSaleStrategy }
 }
 
 export default useZoraCreate
