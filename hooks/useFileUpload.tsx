@@ -10,15 +10,12 @@ const useFileUpload = () => {
   const fileUpload = async (event) => {
     const file = event.target.files[0]
     setError('')
-
     if (file) {
       if (file.size > MAX_FILE_SIZE) {
         setError(`File size exceeds the maximum limit of ${MAX_FILE_SIZE / ONE_MB}MB.`)
         return
       }
-
       try {
-        console.log('SWEETS FILE', file)
         const { uri } = await uploadFile(file)
         setImageUri(uri)
       } catch (err) {
