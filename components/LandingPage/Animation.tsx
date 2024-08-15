@@ -4,8 +4,6 @@ import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 const Animation = () => {
   const { animationUri, mimeType } = useZoraCreateProvider()
 
-  console.log('SWEETS animationUri', animationUri)
-  console.log('SWEETS mimeType', mimeType)
   return (
     <div className="relative w-full max-w-sm mx-auto">
       {mimeType.includes('audio') && (
