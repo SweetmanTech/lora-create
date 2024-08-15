@@ -1,36 +1,12 @@
-import { useState } from 'react'
 import UploadIcon from '../Icons/UploadIcon'
 import { Label } from '../ui/Label'
-import { uploadFile } from '@/lib/ipfs/uploadFile'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import getIpfsLink from '@/lib/ipfs/getIpfsLink'
-
-const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+import useFileUpload from '@/hooks/useFileUpload'
 
 const MainMediaUpload = () => {
-  const [error, setError] = useState('')
-  const { imageUploaded, imageUri, setImageUri } = useZoraCreateProvider()
-
-  const onFileSelected = async (event) => {
-    const file = event.target.files[0]
-    setError('') // Reset error state
-
-    if (file) {
-      if (file.size > MAX_FILE_SIZE) {
-        setError(`File size exceeds the maximum limit of ${MAX_FILE_SIZE / 1024 / 1024}MB.`)
-        return
-      }
-
-      try {
-        console.log('SWEETS FILE', file)
-        const { uri } = await uploadFile(file)
-        setImageUri(uri)
-      } catch (err) {
-        console.error(err)
-        setError('Failed to upload the file. Please try again.')
-      }
-    }
-  }
+  const { imageUploaded, imageUri } = useZoraCreateProvider()
+  const { error, fileUpload } = useFileUpload()
 
   return (
     <div className="grid w-full max-w-sm items-center gap-4">
@@ -40,7 +16,7 @@ const MainMediaUpload = () => {
           id="image"
           type="file"
           className="absolute inset-0 z-10 w-full h-full opacity-0 cursor-pointer"
-          onChange={onFileSelected}
+          onChange={fileUpload}
         />
         <div className="z-0 flex flex-col items-center justify-center space-y-2 text-muted-foreground">
           <UploadIcon className="w-8 h-8" />
