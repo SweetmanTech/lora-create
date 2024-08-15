@@ -7,8 +7,8 @@ import { CHAIN_ID, REFERRAL_RECIPIENT } from '@/lib/consts'
 import { usePaymasterProvider } from '@/providers/PaymasterProvider'
 import useCreateSuccessRedirect from './useCreateSuccessRedirect'
 import useConnectWallet from './useConnectWallet'
-import { useState } from 'react'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
+import useCreateMetadata from './useCreateMetadata'
 
 const useZoraCreate = () => {
   const publicClient = usePublicClient()!
@@ -17,14 +17,13 @@ const useZoraCreate = () => {
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
   useCreateSuccessRedirect(callsStatusId)
   const { connectWallet } = useConnectWallet()
-  const [name, setName] = useState<string>('CC0 Music')
-  const [saleStrategy, setSaleStrategy] = useState<string>('ZoraTimedSaleStrategy')
+  const { name, getUri, saleStrategy, setName, setSaleStrategy } = useCreateMetadata()
 
   const create = async () => {
     try {
       if (!address) await connectWallet()
       const creatorClient = createCreatorClient({ chainId: CHAIN_ID, publicClient })
-      const cc0MusicIpfsHash = 'ipfs://bafkreiazqdg6qc3j6yjcxyhvoyaspmjjwal5wvywjs66jobb3pbzknvzxu'
+      const { uri: cc0MusicIpfsHash } = await getUri()
       const salesConfig = getSalesConfig(saleStrategy)
       const { parameters } = await creatorClient.create1155({
         contract: {
