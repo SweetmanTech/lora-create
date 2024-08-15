@@ -17,17 +17,17 @@ const useZoraCreate = () => {
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
   useCreateSuccessRedirect(callsStatusId)
   const { connectWallet } = useConnectWallet()
-  const { name, getUri, saleStrategy, setName, setSaleStrategy } = useCreateMetadata()
+  const createMetadata = useCreateMetadata()
 
   const create = async () => {
     try {
       if (!address) await connectWallet()
       const creatorClient = createCreatorClient({ chainId: CHAIN_ID, publicClient })
-      const { uri: cc0MusicIpfsHash } = await getUri()
-      const salesConfig = getSalesConfig(saleStrategy)
+      const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
+      const salesConfig = getSalesConfig(createMetadata.saleStrategy)
       const { parameters } = await creatorClient.create1155({
         contract: {
-          name,
+          name: createMetadata.name,
           uri: cc0MusicIpfsHash,
         },
         token: {
@@ -47,7 +47,7 @@ const useZoraCreate = () => {
     }
   }
 
-  return { create, name, setName, saleStrategy, setSaleStrategy }
+  return { create, ...createMetadata }
 }
 
 export default useZoraCreate

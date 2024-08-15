@@ -8,6 +8,8 @@ export const CHAIN_ID = CHAIN.id
 export const DROP_ADDRESS = IS_TESTNET
   ? '0x0b93a56db47797142076e24c520c846c9bd0d6fa' // base sepolia
   : '0x16F1FC98282AFDA367999012027b5A3fA656a713' // base mainnet
+export const DEFAULT_IMAGE_URI =
+  'ipfs://bafkreic3cefqzzqhoc34e2dqqfgtctmfc7mdgcfbapizpjrlroutfzilci'
 
 export const ZORA_PRICE = '777000000000000'
 

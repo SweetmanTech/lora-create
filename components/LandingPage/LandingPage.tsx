@@ -2,6 +2,7 @@
 
 import CreateButton from '../CreateButton'
 import Points from '../Points'
+import MainMediaUpload from './MainMediaUpload'
 import SaleStrategySelect from './SaleStrategySelect'
 import Title from './Title'
 
@@ -11,6 +12,7 @@ const LandingPage = () => (
       <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
         Zora Create
       </h1>
+      <MainMediaUpload />
       <Title />
       <SaleStrategySelect />
       <div className="mt-11">
