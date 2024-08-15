@@ -9,7 +9,7 @@ const useFileUpload = () => {
 
   const fileUpload = async (event) => {
     const file = event.target.files[0]
-    setError('') // Reset error state
+    setError('')
 
     if (file) {
       if (file.size > MAX_FILE_SIZE) {
