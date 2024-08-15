@@ -7,6 +7,7 @@ import useFileUpload from '@/hooks/useFileUpload'
 const MainMediaUpload = () => {
   const { imageUploaded, imageUri, mimeType } = useZoraCreateProvider()
   const { error, fileUpload } = useFileUpload()
+
   return (
     <div className="grid w-full max-w-sm items-center gap-4">
       <Label htmlFor="image">Upload Image</Label>
