@@ -14,7 +14,6 @@ const LandingPage = () => (
         Zora Create
       </h1>
       <MainMediaUpload />
-
       <Title />
       <SaleStrategySelect />
       <Animation />
