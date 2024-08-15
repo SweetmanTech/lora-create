@@ -5,6 +5,7 @@ import Points from '../Points'
 import MainMediaUpload from './MainMediaUpload'
 import SaleStrategySelect from './SaleStrategySelect'
 import Title from './Title'
+import Animation from './Animation'
 
 const LandingPage = () => (
   <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
@@ -15,6 +16,7 @@ const LandingPage = () => (
       <MainMediaUpload />
       <Title />
       <SaleStrategySelect />
+      <Animation />
       <div className="mt-11">
         <CreateButton />
       </div>
