@@ -1,9 +1,9 @@
 import { createConfig, http } from 'wagmi'
 import { coinbaseWallet } from 'wagmi/connectors'
-import { CHAIN, CHAIN_ID } from '../consts'
+import { base, baseSepolia } from 'viem/chains'
 
 const wagmiConfig = createConfig({
-  chains: [CHAIN],
+  chains: [base, baseSepolia],
   connectors: [
     coinbaseWallet({
       appName: 'myco.wtf',
@@ -11,7 +11,8 @@ const wagmiConfig = createConfig({
     }),
   ],
   transports: {
-    [CHAIN_ID]: http(),
+    [base.id]: http(),
+    [baseSepolia.id]: http(),
   } as any,
 })
 

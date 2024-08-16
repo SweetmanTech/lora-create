@@ -1,6 +1,7 @@
 'use client'
 
-import React, { createContext, useContext, useMemo } from 'react'
+import React, { createContext, useContext } from 'react'
+import { base } from 'viem/chains'
 import { useAccount } from 'wagmi'
 import { useCapabilities } from 'wagmi/experimental'
 
@@ -13,23 +14,25 @@ const PaymasterProvider = ({ children }: any) => {
     account: account.address,
   })
 
-  const capabilities = useMemo(() => {
-    if (!availableCapabilities || !account.chainId) return {}
-    const capabilitiesForChain = availableCapabilities[account.chainId]
+  const getCapabilities = (chainId) => {
+    if (!availableCapabilities || !chainId) return {}
+    const capabilitiesForChain = availableCapabilities[chainId]
     if (
       capabilitiesForChain['paymasterService'] &&
       capabilitiesForChain['paymasterService'].supported
     ) {
       return {
         paymasterService: {
-          url: process.env.NEXT_PUBLIC_PAYMASTER_SERVICE_URL,
+          url: `https://api.developer.coinbase.com/rpc/v1/${chainId === base.id ? 'base' : 'base-sepolia'}/${process.env.NEXT_PUBLIC_PAYMASTER_SERVICE_KEY}`,
         },
       }
     }
     return {}
-  }, [availableCapabilities, account.chainId])
+  }
 
-  return <PaymasterContext.Provider value={{ capabilities }}>{children}</PaymasterContext.Provider>
+  return (
+    <PaymasterContext.Provider value={{ getCapabilities }}>{children}</PaymasterContext.Provider>
+  )
 }
 
 const usePaymasterProvider = () => {

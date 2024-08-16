@@ -4,7 +4,7 @@ import { parseEventLogs } from 'viem'
 import { useCallsStatus } from 'wagmi/experimental'
 import { zoraCreator1155FactoryImplABI } from '@zoralabs/protocol-deployments'
 import trackSetupNewContractPoints from '@/lib/stack/trackSetupNewContractPoints'
-import { useAccount } from 'wagmi'
+import { useAccount, useChainId } from 'wagmi'
 import { usePointsProvider } from '@/providers/PointsProvider'
 
 const useCreateSuccessRedirect = (callsStatusId?: string) => {
@@ -17,6 +17,7 @@ const useCreateSuccessRedirect = (callsStatusId?: string) => {
     },
   })
   const { refetch } = usePointsProvider()
+  const chainId = useChainId()
 
   useEffect(() => {
     const handleSuccess = async () => {
@@ -26,7 +27,7 @@ const useCreateSuccessRedirect = (callsStatusId?: string) => {
       }) as any
       const { args } = logs?.[1] as any
       toast.success('Project Created Successfully!')
-      await trackSetupNewContractPoints(address, args)
+      await trackSetupNewContractPoints(address, args, chainId)
       await refetch()
     }
 
