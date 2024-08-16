@@ -6,9 +6,7 @@ import { baseSepolia } from 'viem/chains'
 
 const Point = ({ event }: any) => {
   const chainId = event.metadata.uniqueId.split('-')[0]
-  console.log('SWEETS chainId', chainId)
   const isTestnet = chainId == baseSepolia.id
-  console.log('SWEETS isTestnet', isTestnet)
 
   const handleClick = (address, eventType) => {
     if (eventType !== SETUP_NEW_CONTRACT_EVENT) return

@@ -18,7 +18,6 @@ const useCreateSuccessRedirect = (callsStatusId?: string) => {
   })
   const { refetch } = usePointsProvider()
   const chainId = useChainId()
-  console.log('SWEETS chainId ', chainId)
 
   useEffect(() => {
     const handleSuccess = async () => {

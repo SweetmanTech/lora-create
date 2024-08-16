@@ -8,7 +8,6 @@ const CreateButtons = () => {
   const { points } = leaderboardRank
   const passedOnboarding = points > 65
 
-  console.log('SWEETS points', points)
   return (
     <div
       className={cn(
