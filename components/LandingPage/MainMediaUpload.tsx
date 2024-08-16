@@ -1,5 +1,4 @@
 import UploadIcon from '../Icons/UploadIcon'
-import { Label } from '../ui/Label'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import getIpfsLink from '@/lib/ipfs/getIpfsLink'
 import useFileUpload from '@/hooks/useFileUpload'
@@ -10,8 +9,7 @@ const MainMediaUpload = () => {
 
   return (
     <div className="grid w-full max-w-sm items-center gap-4">
-      <Label htmlFor="image">Upload Image</Label>
-      <div className="relative flex items-center justify-center w-full h-48 border-2 border-dashed border-muted rounded-md cursor-pointer">
+      <div className="relative flex items-center justify-center w-full h-48 border-2 border-dashed border-black rounded-md cursor-pointer">
         <input
           id="image"
           type="file"
@@ -20,9 +18,9 @@ const MainMediaUpload = () => {
         />
         <div className="z-0 flex flex-col items-center justify-center space-y-2 text-muted-foreground">
           <UploadIcon className="w-8 h-8" />
-          <p className="text-sm font-medium">Drag and drop or click to upload</p>
+          <p className="text-sm font-medium">click to upload</p>
         </div>
-        {imageUploaded && mimeType.includes('image') && (
+        {imageUploaded && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={getIpfsLink(imageUri)}
