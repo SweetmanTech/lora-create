@@ -4,7 +4,7 @@ import getIpfsLink from '@/lib/ipfs/getIpfsLink'
 import useFileUpload from '@/hooks/useFileUpload'
 
 const MainMediaUpload = () => {
-  const { imageUploaded, imageUri, mimeType } = useZoraCreateProvider()
+  const { imageUploaded, imageUri } = useZoraCreateProvider()
   const { error, fileUpload } = useFileUpload()
 
   return (

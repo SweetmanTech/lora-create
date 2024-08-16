@@ -1,6 +1,6 @@
 'use client'
 
-import { useAccount, usePublicClient } from 'wagmi'
+import { useAccount, usePublicClient, useSwitchChain } from 'wagmi'
 import { useWriteContracts } from 'wagmi/experimental'
 import { createCreatorClient } from '@zoralabs/protocol-sdk'
 import { CHAIN_ID, REFERRAL_RECIPIENT } from '@/lib/consts'
@@ -13,16 +13,18 @@ import useCreateMetadata from './useCreateMetadata'
 const useZoraCreate = () => {
   const publicClient = usePublicClient()!
   const { address } = useAccount()
-  const { capabilities } = usePaymasterProvider()
+  const { getCapabilities } = usePaymasterProvider()
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
   useCreateSuccessRedirect(callsStatusId)
   const { connectWallet } = useConnectWallet()
   const createMetadata = useCreateMetadata()
+  const { switchChain } = useSwitchChain()
 
-  const create = async () => {
+  const create = async (chainId = CHAIN_ID) => {
     try {
       if (!address) await connectWallet()
-      const creatorClient = createCreatorClient({ chainId: CHAIN_ID, publicClient })
+      await switchChain({ chainId })
+      const creatorClient = createCreatorClient({ chainId, publicClient })
       const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
       const salesConfig = getSalesConfig(createMetadata.saleStrategy)
       const { parameters } = await creatorClient.create1155({
@@ -40,7 +42,7 @@ const useZoraCreate = () => {
       const newParameters = { ...parameters, functionName: 'createContract' }
       await writeContractsAsync({
         contracts: [{ ...(newParameters as any) }],
-        capabilities,
+        capabilities: getCapabilities(chainId),
       } as any)
     } catch (err) {
       console.error(err)
