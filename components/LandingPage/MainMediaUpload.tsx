@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 const MainMediaUpload = () => {
   const { imageUploaded, imageUri } = useZoraCreateProvider()
-  const { error, fileUpload } = useFileUpload()
+  const { fileUpload, loading, error } = useFileUpload()
 
   return (
     <div className="grid w-full max-w-sm items-center gap-4">
@@ -17,10 +17,19 @@ const MainMediaUpload = () => {
           className="absolute inset-0 z-10 w-full h-full opacity-0 cursor-pointer"
           onChange={fileUpload}
         />
-        <div className="z-0 flex flex-col items-center justify-center space-y-2 text-muted-foreground">
-          <UploadIcon className="w-8 h-8" />
-          <p className="text-sm font-medium">click to upload</p>
-        </div>
+
+        {!imageUploaded && (
+          <div className="z-0 flex flex-col items-center justify-center space-y-2 text-muted-foreground">
+            {loading ? (
+              <div className="w-8 h-8 border-2 border-dashed border-black rounded-full animate-spin" />
+            ) : (
+              <>
+                <UploadIcon className="w-8 h-8" />
+                <p className="text-sm font-medium">click to upload</p>
+              </>
+            )}
+          </div>
+        )}
         {imageUploaded && (
           <Image src={getIpfsLink(imageUri)} fill className="object-contain" alt="Image Preview" />
         )}
