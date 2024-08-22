@@ -2,6 +2,7 @@ import UploadIcon from '../Icons/UploadIcon'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import getIpfsLink from '@/lib/ipfs/getIpfsLink'
 import useFileUpload from '@/hooks/useFileUpload'
+import Image from 'next/image'
 
 const MainMediaUpload = () => {
   const { imageUploaded, imageUri } = useZoraCreateProvider()
@@ -21,15 +22,7 @@ const MainMediaUpload = () => {
           <p className="text-sm font-medium">click to upload</p>
         </div>
         {imageUploaded && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={getIpfsLink(imageUri)}
-            alt="Image Preview"
-            width="192"
-            height="192"
-            className="absolute inset-0 z-0 w-full h-full object-cover rounded-md"
-            style={{ aspectRatio: '192/192', objectFit: 'cover' }}
-          />
+          <Image src={getIpfsLink(imageUri)} fill className="object-contain" alt="Image Preview" />
         )}
       </div>
       {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
