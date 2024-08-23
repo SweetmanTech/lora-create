@@ -9,26 +9,28 @@ const MainMediaUpload = () => {
 
   return (
     <div className="grid w-full max-w-sm items-center gap-4">
-      <div className="relative flex items-center justify-center w-full h-48 border-2 border-dashed border-black rounded-md cursor-pointer">
-        <input
-          id="image"
-          type="file"
-          className="absolute inset-0 z-10 w-full h-full opacity-0 cursor-pointer"
-          onChange={fileUpload}
-        />
-        <div className="z-0 flex flex-col items-center justify-center space-y-2 text-muted-foreground">
-          <UploadIcon className="w-8 h-8" />
-          <p className="text-sm font-medium">click to upload</p>
-        </div>
+      <div className="w-full h-48 relative">
+        {!imageUploaded && (
+          <>
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground border-dashed border-2 border-black rounded-md">
+              <UploadIcon className="w-8 h-8" />
+              <p className="text-sm font-medium">click to upload</p>
+            </div>
+            <input
+              id="image"
+              type="file"
+              className="absolute inset-0 opacity-0 cursor-pointer"
+              onChange={fileUpload}
+            />
+          </>
+        )}
+
         {imageUploaded && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={getIpfsLink(imageUri)}
+            className="border-dashed border-2 border-black rounded-md h-full mx-auto"
             alt="Image Preview"
-            width="192"
-            height="192"
-            className="absolute inset-0 z-0 w-full h-full object-cover rounded-md"
-            style={{ aspectRatio: '192/192', objectFit: 'cover' }}
           />
         )}
       </div>
