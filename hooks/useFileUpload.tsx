@@ -6,35 +6,39 @@ import { useState } from 'react'
 const useFileUpload = () => {
   const { setName, setImageUri, setAnimationUri, setMimeType } = useZoraCreateProvider()
   const [error, setError] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
   const fileUpload = async (event) => {
-    const file = event.target.files[0]
     setError('')
-    if (file) {
+    setLoading(true)
+
+    try {
+      const file = event.target.files[0]
+      if (!file) {
+        throw new Error()
+      }
       const mimeType = file.type
       const isImage = mimeType.includes('image')
       if (file.size > MAX_FILE_SIZE) {
-        setError(`File size exceeds the maximum limit of ${MAX_FILE_SIZE / ONE_MB}MB.`)
-        return
+        throw new Error(`File size exceeds the maximum limit of ${MAX_FILE_SIZE / ONE_MB}MB.`)
       }
-      try {
-        const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, '')
-        const { uri } = await uploadFile(file)
-        setName(fileNameWithoutExtension)
-        setMimeType(mimeType)
-        if (isImage) {
-          setImageUri(uri)
-          return
-        }
+      const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, '')
+      const { uri } = await uploadFile(file)
+      setName(fileNameWithoutExtension)
+      setMimeType(mimeType)
+      if (isImage) {
+        setImageUri(uri)
+      } else {
         setAnimationUri(uri)
-      } catch (err) {
-        console.error(err)
-        setError('Failed to upload the file. Please try again.')
       }
+    } catch (err) {
+      console.error(err)
+      setError(err.message ?? 'Failed to upload the file. Please try again.')
     }
+    setLoading(false)
   }
 
-  return { error, fileUpload }
+  return { fileUpload, loading, error }
 }
 
 export default useFileUpload
