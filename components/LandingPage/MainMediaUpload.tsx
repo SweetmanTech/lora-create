@@ -2,6 +2,7 @@ import UploadIcon from '../Icons/UploadIcon'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import getIpfsLink from '@/lib/ipfs/getIpfsLink'
 import useFileUpload from '@/hooks/useFileUpload'
+import { cn } from '@/lib/utils'
 
 const MainMediaUpload = () => {
   const { imageUploaded, imageUri } = useZoraCreateProvider()
@@ -9,7 +10,12 @@ const MainMediaUpload = () => {
 
   return (
     <div className="grid w-full max-w-sm items-center gap-4">
-      <div className="w-full h-48 relative flex flex-col items-center justify-center space-y-2 text-muted-foreground">
+      <div
+        className={cn(
+          'w-full h-48 relative flex flex-col items-center justify-center space-y-2 text-muted-foreground rounded-md',
+          (loading || !imageUploaded) && 'border-dashed border-2 border-black',
+        )}
+      >
         <input
           id="image"
           type="file"
