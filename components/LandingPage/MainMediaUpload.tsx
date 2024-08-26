@@ -1,12 +1,12 @@
 import UploadIcon from '../Icons/UploadIcon'
-import { useZoraCreate } from '@/providers/ZoraCreateProvider'
+import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import getIpfsLink from '@/lib/ipfs/getIpfsLink'
 import useFileUpload from '@/hooks/useFileUpload'
 import { cn } from '@/lib/utils'
 import Spinner from '@/components/ui/Spinner'
 
 const MainMediaUpload = () => {
-  const { imageUploaded, imageUri } = useZoraCreate()
+  const { imageUploaded, imageUri } = useZoraCreateProvider()
   const { fileUpload, loading, error } = useFileUpload()
 
   return (

@@ -6,11 +6,11 @@ import SaleStrategySelect from './SaleStrategySelect'
 import Title from './Title'
 import Animation from './Animation'
 import CreateButtons from './CreateButtons'
-import { useZoraCreate } from '@/providers/ZoraCreateProvider'
+import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import Spinner from '@/components/ui/Spinner'
 
 export default function LandingPage() {
-  const { creating } = useZoraCreate()
+  const { creating } = useZoraCreateProvider()
   return (
     <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       {creating ? (
