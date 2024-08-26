@@ -1,5 +1,7 @@
 # LORA CREATE
 
+<img width="1440" alt="Screenshot 2024-08-26 at 7 41 11 PM" src="https://github.com/user-attachments/assets/94e18d7d-71c8-48de-944a-b920f47964b4">
+
 ## Setup
 
 1. Use node v20 with `nvm use 20`.
