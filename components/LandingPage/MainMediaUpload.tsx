@@ -1,11 +1,12 @@
 import UploadIcon from '../Icons/UploadIcon'
-import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
+import { useZoraCreate } from '@/providers/ZoraCreateProvider'
 import getIpfsLink from '@/lib/ipfs/getIpfsLink'
 import useFileUpload from '@/hooks/useFileUpload'
 import { cn } from '@/lib/utils'
+import Spinner from '@/components/ui/Spinner'
 
 const MainMediaUpload = () => {
-  const { imageUploaded, imageUri } = useZoraCreateProvider()
+  const { imageUploaded, imageUri } = useZoraCreate()
   const { fileUpload, loading, error } = useFileUpload()
 
   return (
@@ -24,7 +25,7 @@ const MainMediaUpload = () => {
         />
 
         {loading ? (
-          <div className="w-8 h-8 border-2 border-dashed border-black rounded-full animate-spin" />
+          <Spinner />
         ) : imageUploaded ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img

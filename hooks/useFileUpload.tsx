@@ -1,10 +1,10 @@
 import { MAX_FILE_SIZE, ONE_MB } from '@/lib/consts'
 import { uploadFile } from '@/lib/ipfs/uploadFile'
-import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
+import { useZoraCreate } from '@/providers/ZoraCreateProvider'
 import { useState } from 'react'
 
 const useFileUpload = () => {
-  const { setName, setImageUri, setAnimationUri, setMimeType } = useZoraCreateProvider()
+  const { setName, setImageUri, setAnimationUri, setMimeType } = useZoraCreate()
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 

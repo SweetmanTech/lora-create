@@ -7,7 +7,7 @@ import trackSetupNewContractPoints from '@/lib/stack/trackSetupNewContractPoints
 import { useAccount, useChainId } from 'wagmi'
 import { usePointsProvider } from '@/providers/PointsProvider'
 
-const useCreateSuccessRedirect = (callsStatusId?: string) => {
+export default function useCreateSuccess(callsStatusId: string, onSuccess: () => void) {
   const { address } = useAccount()
   const { data: callsStatus } = useCallsStatus({
     id: callsStatusId as string,
@@ -26,15 +26,13 @@ const useCreateSuccessRedirect = (callsStatusId?: string) => {
         logs: callsStatus.receipts?.[0]?.logs as any[],
       }) as any
       const { args } = logs?.[1] as any
-      toast.success('Project Created Successfully!')
+      toast.success('Created Successfully!')
       await trackSetupNewContractPoints(address, args, chainId)
       await refetch()
+      onSuccess()
     }
-
     if (callsStatus?.status !== 'CONFIRMED') return
     handleSuccess()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callsStatus])
 }
-
-export default useCreateSuccessRedirect

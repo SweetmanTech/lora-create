@@ -1,10 +1,10 @@
 'use client'
 
 import Button from '../Button'
-import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
+import { useZoraCreate } from '@/providers/ZoraCreateProvider'
 
 const CreateButton = ({ chainId, children }: any) => {
-  const { create } = useZoraCreateProvider()
+  const { create } = useZoraCreate()
 
   return (
     <Button

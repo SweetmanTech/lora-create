@@ -1,8 +1,8 @@
 import getIpfsLink from '@/lib/ipfs/getIpfsLink'
-import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
+import { useZoraCreate } from '@/providers/ZoraCreateProvider'
 
 const Animation = () => {
-  const { animationUri, mimeType } = useZoraCreateProvider()
+  const { animationUri, mimeType } = useZoraCreate()
 
   return (
     <div className="relative w-full max-w-sm mx-auto">

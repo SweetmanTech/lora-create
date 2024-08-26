@@ -5,10 +5,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/Select'
-import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
+import { useZoraCreate } from '@/providers/ZoraCreateProvider'
 
 const SaleStrategySelect = () => {
-  const { saleStrategy, setSaleStrategy } = useZoraCreateProvider()
+  const { saleStrategy, setSaleStrategy } = useZoraCreate()
 
   const handleChange = (value) => {
     setSaleStrategy(value)
