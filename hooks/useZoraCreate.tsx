@@ -1,29 +1,35 @@
 'use client'
 
+import { useState } from 'react'
 import { useAccount, usePublicClient, useSwitchChain } from 'wagmi'
 import { useWriteContracts } from 'wagmi/experimental'
 import { createCreatorClient } from '@zoralabs/protocol-sdk'
 import { CHAIN_ID, REFERRAL_RECIPIENT } from '@/lib/consts'
 import { usePaymasterProvider } from '@/providers/PaymasterProvider'
-import useCreateSuccessRedirect from './useCreateSuccessRedirect'
-import useConnectWallet from './useConnectWallet'
+import useCreateSuccess from '@/hooks/useCreateSuccess'
+import useConnectWallet from '@/hooks/useConnectWallet'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
-import useCreateMetadata from './useCreateMetadata'
+import useCreateMetadata from '@/hooks/useCreateMetadata'
+import { toast } from 'react-toastify'
 
-const useZoraCreate = () => {
+export default function useZoraCreate() {
   const publicClient = usePublicClient()!
   const { address } = useAccount()
   const { getCapabilities } = usePaymasterProvider()
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
-  useCreateSuccessRedirect(callsStatusId)
+
   const { connectWallet } = useConnectWallet()
   const createMetadata = useCreateMetadata()
   const { switchChain } = useSwitchChain()
+  const [creating, setCreating] = useState<boolean>(false)
+
+  useCreateSuccess(callsStatusId, () => setCreating(false))
 
   const create = async (chainId = CHAIN_ID) => {
+    setCreating(true)
     try {
       if (!address) await connectWallet()
-      await switchChain({ chainId })
+      switchChain({ chainId })
       const creatorClient = createCreatorClient({ chainId, publicClient })
       const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
       const salesConfig = getSalesConfig(createMetadata.saleStrategy)
@@ -45,11 +51,11 @@ const useZoraCreate = () => {
         capabilities: getCapabilities(chainId),
       } as any)
     } catch (err) {
-      console.error(err)
+      setCreating(false)
+      toast.error("Couldn't create contract")
+      console.log(err.message)
     }
   }
 
-  return { create, ...createMetadata }
+  return { create, creating, ...createMetadata }
 }
-
-export default useZoraCreate
