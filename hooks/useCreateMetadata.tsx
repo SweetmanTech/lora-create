@@ -18,7 +18,7 @@ const useCreateMetadata = () => {
       image: imageUri,
       animation_url: animationUri,
       content: {
-        mime: 'audio/mpeg',
+        mime: mimeType,
         uri: animationUri,
       },
     })
