@@ -19,9 +19,5 @@ export const SMART_WALLET_LOGIN_POINT = 11
 export const SETUP_NEW_CONTRACT_POINT = 55
 
 // IPFS
-export const DEFAULT_IMAGE_URI =
-  'ipfs://bafkreic3cefqzzqhoc34e2dqqfgtctmfc7mdgcfbapizpjrlroutfzilci'
-export const DEFAULT_ANIMATION_URI =
-  'ipfs://bafybeicpnghwsq5xyaej4hi6vuxoi4oxplll3wfhurf2v6y6kfctrtintq'
 export const ONE_MB = 1024 * 1024
 export const MAX_FILE_SIZE = 5 * ONE_MB
