@@ -4,7 +4,8 @@ import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import { useState } from 'react'
 
 const useFileUpload = () => {
-  const { setName, setImageUri, setAnimationUri, setMimeType } = useZoraCreateProvider()
+  const { setName, setImageUri, setAnimationUri, setMimeType, animationUri } =
+    useZoraCreateProvider()
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -26,11 +27,14 @@ const useFileUpload = () => {
         throw new Error(`File size exceeds the maximum limit of ${MAX_FILE_SIZE / ONE_MB}MB.`)
       }
       const { uri } = await uploadFile(file)
-      setMimeType(mimeType)
       if (isImage) {
         setImageUri(uri)
+        if (!animationUri) {
+          setMimeType(mimeType)
+        }
       } else {
         setAnimationUri(uri)
+        setMimeType(mimeType)
       }
     } catch (err) {
       console.error(err)
