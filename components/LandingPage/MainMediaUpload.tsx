@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import Spinner from '@/components/ui/Spinner'
 
 const MainMediaUpload = () => {
-  const { imageUploaded, imageUri } = useZoraCreateProvider()
+  const { imageUri } = useZoraCreateProvider()
   const { fileUpload, loading, error } = useFileUpload()
 
   return (
@@ -14,7 +14,7 @@ const MainMediaUpload = () => {
       <div
         className={cn(
           'w-full h-48 relative flex flex-col items-center justify-center space-y-2 text-muted-foreground rounded-md',
-          (loading || !imageUploaded) && 'border-dashed border-2 border-black',
+          (loading || !imageUri) && 'border-dashed border-2 border-black',
         )}
       >
         <input
@@ -26,7 +26,7 @@ const MainMediaUpload = () => {
 
         {loading ? (
           <Spinner />
-        ) : imageUploaded ? (
+        ) : imageUri ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={getIpfsLink(imageUri)}
