@@ -1,4 +1,4 @@
-import { DEFAULT_ANIMATION_URI, DEFAULT_IMAGE_URI } from '@/lib/consts'
+import { DEFAULT_IMAGE_URI } from '@/lib/consts'
 import { uploadJson } from '@/lib/ipfs/uploadJson'
 import { useState } from 'react'
 
@@ -7,9 +7,8 @@ const useCreateMetadata = () => {
   const [saleStrategy, setSaleStrategy] = useState<string>('ZoraTimedSaleStrategy')
   const [imageUri, setImageUri] = useState<string>(DEFAULT_IMAGE_URI)
   const [mimeType, setMimeType] = useState<string>('')
-  const [animationUri, setAnimationUri] = useState<string>(DEFAULT_ANIMATION_URI)
+  const [animationUri, setAnimationUri] = useState<string>('')
   const imageUploaded = DEFAULT_IMAGE_URI !== imageUri
-  const animationUploaded = DEFAULT_ANIMATION_URI !== animationUri
 
   const getUri = async () =>
     await uploadJson({
@@ -26,7 +25,6 @@ const useCreateMetadata = () => {
   return {
     animationUri,
     setAnimationUri,
-    animationUploaded,
     getUri,
     imageUploaded,
     imageUri,

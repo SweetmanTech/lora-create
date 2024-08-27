@@ -3,7 +3,7 @@
 import useZoraCreate from '@/hooks/useZoraCreate'
 import React, { createContext, useContext, useMemo } from 'react'
 
-const ZoraCreateContext = createContext(undefined)
+const ZoraCreateContext = createContext<ReturnType<typeof useZoraCreate>>(undefined)
 
 const ZoraCreateProvider = ({ children }: any) => {
   const zoraCreate = useZoraCreate()
