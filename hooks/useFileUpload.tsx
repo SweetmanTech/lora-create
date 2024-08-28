@@ -15,17 +15,21 @@ const useFileUpload = () => {
 
     try {
       const file = event.target.files[0]
-      const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, '')
-      setName(fileNameWithoutExtension)
-
       if (!file) {
         throw new Error()
       }
-      const mimeType = file.type
-      const isImage = mimeType.includes('image')
       if (file.size > MAX_FILE_SIZE) {
         throw new Error(`File size exceeds the maximum limit of ${MAX_FILE_SIZE / ONE_MB}MB.`)
       }
+
+      const mimeType = file.type
+      const isImage = mimeType.includes('image')
+
+      if (isImage) {
+        const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, '')
+        setName(fileNameWithoutExtension)
+      }
+
       const { uri } = await uploadFile(file)
       if (isImage) {
         setImageUri(uri)

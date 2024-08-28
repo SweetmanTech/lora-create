@@ -10,7 +10,7 @@ import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import Spinner from '@/components/ui/Spinner'
 
 export default function LandingPage() {
-  const { creating, imageUri } = useZoraCreateProvider()
+  const { creating, name } = useZoraCreateProvider()
 
   if (creating) {
     return (
@@ -28,7 +28,7 @@ export default function LandingPage() {
       </h1>
       <MainMediaUpload />
       <Animation />
-      {imageUri && (
+      {name && (
         <>
           <Title />
           <SaleStrategySelect />
