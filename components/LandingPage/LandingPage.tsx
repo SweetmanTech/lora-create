@@ -10,7 +10,7 @@ import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import Spinner from '@/components/ui/Spinner'
 
 export default function LandingPage() {
-  const { creating } = useZoraCreateProvider()
+  const { creating, name } = useZoraCreateProvider()
 
   if (creating) {
     return (
@@ -27,10 +27,14 @@ export default function LandingPage() {
         Zora Create
       </h1>
       <MainMediaUpload />
-      <Title />
-      <SaleStrategySelect />
       <Animation />
-      <CreateButtons />
+      {name && (
+        <>
+          <Title />
+          <SaleStrategySelect />
+          <CreateButtons />
+        </>
+      )}
       <Points />
     </div>
   )
