@@ -7,7 +7,6 @@ import { createCreatorClient } from '@zoralabs/protocol-sdk'
 import { CHAIN_ID, REFERRAL_RECIPIENT } from '@/lib/consts'
 import { usePaymasterProvider } from '@/providers/PaymasterProvider'
 import useCreateSuccess from '@/hooks/useCreateSuccess'
-import useConnectWallet from '@/hooks/useConnectWallet'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
 import useCreateMetadata from '@/hooks/useCreateMetadata'
 import { toast } from 'react-toastify'
@@ -18,9 +17,8 @@ export default function useZoraCreate() {
   const { getCapabilities } = usePaymasterProvider()
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
 
-  const { connectWallet } = useConnectWallet()
   const createMetadata = useCreateMetadata()
-  const { switchChain } = useSwitchChain()
+  const { switchChainAsync } = useSwitchChain()
   const [creating, setCreating] = useState<boolean>(false)
 
   useCreateSuccess(callsStatusId, () => setCreating(false))
@@ -28,8 +26,10 @@ export default function useZoraCreate() {
   const create = async (chainId = CHAIN_ID) => {
     setCreating(true)
     try {
-      if (!address) await connectWallet()
-      switchChain({ chainId })
+      if (!address) {
+        throw new Error('No wallet connected')
+      }
+      await switchChainAsync({ chainId })
       const creatorClient = createCreatorClient({ chainId, publicClient })
       const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
       const salesConfig = getSalesConfig(createMetadata.saleStrategy)
@@ -43,7 +43,7 @@ export default function useZoraCreate() {
           createReferral: REFERRAL_RECIPIENT,
           salesConfig,
         },
-        account: address!,
+        account: address,
       })
       const newParameters = { ...parameters, functionName: 'createContract' }
       await writeContractsAsync({

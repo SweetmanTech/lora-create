@@ -8,9 +8,12 @@ import Animation from './Animation'
 import CreateButtons from './CreateButtons'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import Spinner from '@/components/ui/Spinner'
+import { useAccount } from 'wagmi'
+import LoginButton from '@/components/LoginButton'
 
 export default function LandingPage() {
   const { creating, name } = useZoraCreateProvider()
+  const { address } = useAccount()
 
   if (creating) {
     return (
@@ -32,7 +35,7 @@ export default function LandingPage() {
         <>
           <Title />
           <SaleStrategySelect />
-          <CreateButtons />
+          {address ? <CreateButtons /> : <LoginButton />}
         </>
       )}
       <Points />
