@@ -1,6 +1,5 @@
 'use client'
 
-import Points from '../Points'
 import MainMediaUpload from './MainMediaUpload'
 import SaleStrategySelect from './SaleStrategySelect'
 import Title from './Title'
@@ -38,7 +37,6 @@ export default function LandingPage() {
           {address ? <CreateButtons /> : <LoginButton />}
         </>
       )}
-      <Points />
     </div>
   )
 }
