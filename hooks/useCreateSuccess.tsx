@@ -5,7 +5,6 @@ import { useCallsStatus } from 'wagmi/experimental'
 import { zoraCreator1155FactoryImplABI } from '@zoralabs/protocol-deployments'
 import trackSetupNewContractPoints from '@/lib/stack/trackSetupNewContractPoints'
 import { useAccount, useChainId } from 'wagmi'
-import { usePointsProvider } from '@/providers/PointsProvider'
 
 export default function useCreateSuccess(callsStatusId: string, onSuccess: () => void) {
   const { address } = useAccount()
@@ -16,7 +15,6 @@ export default function useCreateSuccess(callsStatusId: string, onSuccess: () =>
       refetchInterval: (data) => (data.state.data?.status === 'CONFIRMED' ? false : 500),
     },
   })
-  const { refetch } = usePointsProvider()
   const chainId = useChainId()
 
   useEffect(() => {
@@ -28,7 +26,6 @@ export default function useCreateSuccess(callsStatusId: string, onSuccess: () =>
       const { args } = logs?.[1] as any
       toast.success('Created Successfully!')
       await trackSetupNewContractPoints(address, args, chainId)
-      await refetch()
       onSuccess()
     }
     if (callsStatus?.status !== 'CONFIRMED') return
