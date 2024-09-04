@@ -13,7 +13,8 @@ const MainMediaUpload = () => {
     <div className="grid w-full max-w-sm items-center gap-4">
       <div
         className={cn(
-          'w-full h-48 relative flex flex-col items-center justify-center space-y-2 text-muted-foreground rounded-md',
+          'w-full relative rounded-md',
+          (!imageUri || loading) && 'aspect-square',
           (loading || !imageUri) && 'border-dashed border-2 border-black',
         )}
       >
@@ -25,19 +26,21 @@ const MainMediaUpload = () => {
         />
 
         {loading ? (
-          <Spinner />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Spinner />
+          </div>
         ) : imageUri ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={getIpfsLink(imageUri)}
-            className="border-dashed border-2 border-black rounded-md h-full mx-auto"
+            className="w-full h-auto rounded-md"
             alt="Image Preview"
           />
         ) : (
-          <>
+          <div className="absolute inset-0 flex flex-col items-center justify-center space-y-2 text-muted-foreground">
             <UploadIcon className="w-8 h-8" />
             <p className="text-sm font-medium">click to upload</p>
-          </>
+          </div>
         )}
       </div>
       {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
