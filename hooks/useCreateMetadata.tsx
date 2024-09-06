@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 const useCreateMetadata = () => {
   const [name, setName] = useState<string>('')
-  const [saleStrategy, setSaleStrategy] = useState<string>('ZoraTimedSaleStrategy')
+  const [isTimedSale, setIsTimedSale] = useState<boolean>(true)
   const [imageUri, setImageUri] = useState<string>('')
   const [mimeType, setMimeType] = useState<string>('')
   const [animationUri, setAnimationUri] = useState<string>('')
@@ -29,9 +29,9 @@ const useCreateMetadata = () => {
     mimeType,
     setMimeType,
     name,
-    saleStrategy,
+    isTimedSale,
     setName,
-    setSaleStrategy,
+    setIsTimedSale,
   }
 }
 

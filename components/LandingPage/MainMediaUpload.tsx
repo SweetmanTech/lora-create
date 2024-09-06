@@ -10,11 +10,11 @@ const MainMediaUpload = () => {
   const { fileUpload, loading, error } = useFileUpload()
 
   return (
-    <div className="grid w-full max-w-sm items-center gap-4">
+    <div className="grid w-full max-w-3xl items-center gap-4">
       <div
         className={cn(
           'w-full relative rounded-md',
-          (!imageUri || loading) && 'aspect-square',
+          (!imageUri || loading) && 'aspect-square min-h-[300px] min-w-[300px]',
           (loading || !imageUri) && 'border-dashed border-2 border-black',
         )}
       >
