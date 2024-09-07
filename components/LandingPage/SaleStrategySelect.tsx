@@ -1,29 +1,24 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/Select'
+import { Switch } from '@/components/ui/Switch'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
+import { Label } from '@/components/ui/Label'
 
 const SaleStrategySelect = () => {
-  const { saleStrategy, setSaleStrategy } = useZoraCreateProvider()
-
-  const handleChange = (value) => {
-    setSaleStrategy(value)
-  }
+  const { isTimedSale, setIsTimedSale } = useZoraCreateProvider()
 
   return (
-    <Select defaultValue={saleStrategy} onValueChange={handleChange}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Sale Strategy" />
-      </SelectTrigger>
-      <SelectContent className="bg-background opacity-100">
-        <SelectItem value="ZoraTimedSaleStrategy">✧111 + Uniswap V3 Pool✧</SelectItem>
-        <SelectItem value="ZoraFixedPriceSaleStrategy">✧777✧</SelectItem>
-      </SelectContent>
-    </Select>
+    <div className="flex flex-col items-start space-y-2">
+      <Label htmlFor="sale-strategy" className="text-xl">
+        {isTimedSale ? '✧111 + Uniswap✧' : '✧777✧'}
+      </Label>
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="sale-strategy"
+          checked={isTimedSale}
+          onCheckedChange={setIsTimedSale}
+          className="bg-black"
+        />
+      </div>
+    </div>
   )
 }
 

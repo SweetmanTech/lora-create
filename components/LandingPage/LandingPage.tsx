@@ -1,14 +1,13 @@
 'use client'
 
-import MainMediaUpload from './MainMediaUpload'
 import SaleStrategySelect from './SaleStrategySelect'
 import Title from './Title'
-import Animation from './Animation'
 import CreateButtons from './CreateButtons'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import Spinner from '@/components/ui/Spinner'
 import { useAccount } from 'wagmi'
 import LoginButton from '@/components/LoginButton'
+import MediaUpload from '../MediaUpload'
 
 export default function LandingPage() {
   const { creating, name } = useZoraCreateProvider()
@@ -24,19 +23,21 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="mx-auto max-w-md text-center items-center flex flex-col gap-5">
-      <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-        Zora Create
-      </h1>
-      <MainMediaUpload />
-      <Animation />
-      {name && (
-        <>
-          <Title />
-          <SaleStrategySelect />
-          {address ? <CreateButtons /> : <LoginButton />}
-        </>
-      )}
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mt-8 md:flex md:space-x-8">
+        <div className="md:w-1/2 flex flex-col items-center gap-5">
+          <MediaUpload />
+        </div>
+        {name && (
+          <div className="mt-4 md:mt-0 md:w-1/2 flex flex-col items-center gap-3">
+            <div className="w-full flex flex-col items-start gap-4">
+              <Title />
+              <SaleStrategySelect />
+            </div>
+            {address ? <CreateButtons /> : <LoginButton />}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

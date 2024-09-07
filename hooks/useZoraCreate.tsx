@@ -34,7 +34,9 @@ export default function useZoraCreate() {
       await switchChainAsync({ chainId })
       const creatorClient = createCreatorClient({ chainId, publicClient })
       const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
-      const salesConfig = getSalesConfig(createMetadata.saleStrategy)
+      const salesConfig = getSalesConfig(
+        createMetadata.isTimedSale ? 'ZoraTimedSaleStrategy' : 'ZoraFixedPriceSaleStrategy',
+      )
       const { parameters } = await creatorClient.create1155({
         contract: {
           name: createMetadata.name,
