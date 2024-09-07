@@ -7,7 +7,7 @@ import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import Spinner from '@/components/ui/Spinner'
 import { useAccount } from 'wagmi'
 import LoginButton from '@/components/LoginButton'
-import MediaUpload from './MediaUpload'
+import MediaUpload from '../MediaUpload'
 
 export default function LandingPage() {
   const { creating, name } = useZoraCreateProvider()
@@ -29,7 +29,7 @@ export default function LandingPage() {
           <MediaUpload />
         </div>
         {name && (
-          <div className="mt-8 md:mt-0 md:w-1/2 flex flex-col items-center gap-5">
+          <div className="mt-4 md:mt-0 md:w-1/2 flex flex-col items-center gap-3">
             <div className="w-full flex flex-col items-start gap-4">
               <Title />
               <SaleStrategySelect />

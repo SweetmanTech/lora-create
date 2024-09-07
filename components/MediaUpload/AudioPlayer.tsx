@@ -1,15 +1,15 @@
-import { useState, useRef } from 'react'
-import { Play, Pause, X } from 'lucide-react'
-import Button from '../Button'
-import { Slider } from '../ui/Slider'
-import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import getIpfsLink from '@/lib/ipfs/getIpfsLink'
+import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
+import { useRef, useState } from 'react'
+import Button from '../Button'
+import { Pause, Play } from 'lucide-react'
+import { Slider } from '../ui/Slider'
 
-export default function AudioPlayer() {
+const AudioPlayer = ({ onClick }) => {
+  const { imageUri, animationUri } = useZoraCreateProvider()
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
   const audioRef = useRef<HTMLAudioElement>(null)
-  const { animationUri, imageUri } = useZoraCreateProvider()
 
   const togglePlayPause = () => {
     if (audioRef.current) {
@@ -39,20 +39,13 @@ export default function AudioPlayer() {
 
   return (
     <div className="w-full bg-white rounded-lg shadow-lg overflow-hidden">
-      <div className="relative">
+      <div className="relative" onClick={onClick}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={imageUri ? getIpfsLink(imageUri) : '/placeholder.svg?height=200&width=200'}
+          src={imageUri ? getIpfsLink(imageUri) : ''}
           alt="Audio cover"
-          className="w-full h-auto"
+          className="w-full h-auto cursor-pointer"
         />
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-2 right-2 text-white hover:text-gray-200"
-          onClick={() => console.log('Close player')}
-        >
-          <X className="h-6 w-6" />
-        </Button>
       </div>
       <div className="p-4">
         <audio ref={audioRef} src={getIpfsLink(animationUri)} onTimeUpdate={handleTimeUpdate} />
@@ -71,9 +64,11 @@ export default function AudioPlayer() {
           onValueChange={handleSliderChange}
           max={100}
           step={1}
-          className="w-full"
+          className="w-full bg-black"
         />
       </div>
     </div>
   )
 }
+
+export default AudioPlayer

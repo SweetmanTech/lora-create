@@ -3,7 +3,7 @@ import CreateButton from '../CreateButton'
 
 const CreateButtons = () => {
   return (
-    <div className="mt-11 flex justify-between w-full gap-2">
+    <div className="flex justify-between w-full gap-2">
       <CreateButton chainId={baseSepolia.id}>Preview</CreateButton>
       <CreateButton chainId={base.id}>Publish</CreateButton>
     </div>
