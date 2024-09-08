@@ -1,57 +1,46 @@
 'use client'
 
 import { useState } from 'react'
-import { useAccount, usePublicClient, useSwitchChain } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 import { useWriteContracts } from 'wagmi/experimental'
-import { createCreatorClient } from '@zoralabs/protocol-sdk'
-import { CHAIN_ID, PROFILE_APP_URL, REFERRAL_RECIPIENT } from '@/lib/consts'
+import { CHAIN_ID, PROFILE_APP_URL } from '@/lib/consts'
 import { usePaymasterProvider } from '@/providers/PaymasterProvider'
 import useCreateSuccess from '@/hooks/useCreateSuccess'
-import getSalesConfig from '@/lib/zora/getSalesConfig'
 import useCreateMetadata from '@/hooks/useCreateMetadata'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
+import { Address } from 'viem'
+import useZoraCreateParameters from './useZoraCreateParameters'
 
 export default function useZoraCreate() {
   const { push } = useRouter()
-  const publicClient = usePublicClient()!
   const { address } = useAccount()
   const { getCapabilities } = usePaymasterProvider()
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
-
   const createMetadata = useCreateMetadata()
   const { switchChainAsync } = useSwitchChain()
   const [creating, setCreating] = useState<boolean>(false)
+  const params = useParams()
+  const chainId = Number(params.chainId) || CHAIN_ID
+  const collection = params.collection as Address | undefined
+  const { parameters } = useZoraCreateParameters(chainId, collection)
 
-  useCreateSuccess(callsStatusId, () => push(`${PROFILE_APP_URL}/${address}`))
+  useCreateSuccess(callsStatusId, () => push(`${PROFILE_APP_URL}/${address}`), !!params.collection)
 
-  const create = async (chainId = CHAIN_ID) => {
+  const create = async () => {
     setCreating(true)
     try {
       if (!address) {
         throw new Error('No wallet connected')
       }
       await switchChainAsync({ chainId })
-      const creatorClient = createCreatorClient({ chainId, publicClient })
-      const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
-      const salesConfig = getSalesConfig(
-        createMetadata.isTimedSale ? 'ZoraTimedSaleStrategy' : 'ZoraFixedPriceSaleStrategy',
-      )
-      const { parameters } = await creatorClient.create1155({
-        contract: {
-          name: createMetadata.name,
-          uri: cc0MusicIpfsHash,
-        },
-        token: {
-          tokenMetadataURI: cc0MusicIpfsHash,
-          createReferral: REFERRAL_RECIPIENT,
-          salesConfig,
-        },
-        account: address,
-      })
-      const newParameters = { ...parameters, functionName: 'createContract' }
+
+      if (!parameters) {
+        throw new Error('Parameters not ready')
+      }
+
       await writeContractsAsync({
-        contracts: [{ ...(newParameters as any) }],
+        contracts: [{ ...parameters }],
         capabilities: getCapabilities(chainId),
       } as any)
     } catch (err) {

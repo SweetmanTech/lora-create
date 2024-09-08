@@ -2,12 +2,12 @@
 
 import SaleStrategySelect from './SaleStrategySelect'
 import Title from './Title'
-import CreateButtons from './CreateButtons'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import Spinner from '@/components/ui/Spinner'
 import { useAccount } from 'wagmi'
 import LoginButton from '@/components/LoginButton'
 import MediaUpload from '../MediaUpload'
+import CreateButtons from './CreateButtons'
 
 export default function LandingPage() {
   const { creating, name } = useZoraCreateProvider()
