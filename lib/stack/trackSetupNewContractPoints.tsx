@@ -7,15 +7,13 @@ const trackSetupNewContractPoints = async (
   setupContractEventArgs: any,
   chainId: any,
 ) => {
-  const newContract = setupContractEventArgs.newContract
   const stackClient = getStackClient()
-  const params = {
+  await stackClient.track(SETUP_NEW_CONTRACT_EVENT, {
     points: SETUP_NEW_CONTRACT_POINT,
     account: address,
-    uniqueId: `${chainId}-${newContract}`,
-    metadata: { ...setupContractEventArgs, newContract },
-  }
-  await stackClient.track(SETUP_NEW_CONTRACT_EVENT, params)
+    uniqueId: `${chainId}-${setupContractEventArgs.newContract}`,
+    metadata: setupContractEventArgs,
+  })
 }
 
 export default trackSetupNewContractPoints
