@@ -15,7 +15,6 @@ const trackSetupNewContractPoints = async (
     uniqueId: `${chainId}-${newContract}`,
     metadata: { ...setupContractEventArgs, newContract },
   }
-  console.log('SWEETS PARAMS', params)
   await stackClient.track(SETUP_NEW_CONTRACT_EVENT, params)
 }
 
