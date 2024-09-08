@@ -10,7 +10,8 @@ import useCreateSuccess from '@/hooks/useCreateSuccess'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
 import useCreateMetadata from '@/hooks/useCreateMetadata'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
+import { Address } from 'viem'
 
 export default function useZoraCreate() {
   const { push } = useRouter()
@@ -18,14 +19,14 @@ export default function useZoraCreate() {
   const { address } = useAccount()
   const { getCapabilities } = usePaymasterProvider()
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
-
   const createMetadata = useCreateMetadata()
   const { switchChainAsync } = useSwitchChain()
   const [creating, setCreating] = useState<boolean>(false)
+  const params = useParams()
 
-  useCreateSuccess(callsStatusId, () => push(`${PROFILE_APP_URL}/${address}`))
+  useCreateSuccess(callsStatusId, () => push(`${PROFILE_APP_URL}/${address}`), !!params.collection)
 
-  const create = async (chainId = CHAIN_ID) => {
+  const create = async (chainId = CHAIN_ID, collectionAddress?: Address) => {
     setCreating(true)
     try {
       if (!address) {
@@ -37,21 +38,39 @@ export default function useZoraCreate() {
       const salesConfig = getSalesConfig(
         createMetadata.isTimedSale ? 'ZoraTimedSaleStrategy' : 'ZoraFixedPriceSaleStrategy',
       )
-      const { parameters } = await creatorClient.create1155({
-        contract: {
-          name: createMetadata.name,
-          uri: cc0MusicIpfsHash,
-        },
-        token: {
-          tokenMetadataURI: cc0MusicIpfsHash,
-          createReferral: REFERRAL_RECIPIENT,
-          salesConfig,
-        },
-        account: address,
-      })
-      const newParameters = { ...parameters, functionName: 'createContract' }
+
+      let parameters
+      if (collectionAddress) {
+        const { parameters: existingParameters } = await creatorClient.create1155OnExistingContract(
+          {
+            contractAddress: collectionAddress,
+            token: {
+              tokenMetadataURI: cc0MusicIpfsHash,
+              createReferral: REFERRAL_RECIPIENT,
+              salesConfig,
+            },
+            account: address,
+          },
+        )
+        parameters = existingParameters
+      } else {
+        const { parameters: newParameters } = await creatorClient.create1155({
+          contract: {
+            name: createMetadata.name,
+            uri: cc0MusicIpfsHash,
+          },
+          token: {
+            tokenMetadataURI: cc0MusicIpfsHash,
+            createReferral: REFERRAL_RECIPIENT,
+            salesConfig,
+          },
+          account: address,
+        })
+        parameters = { ...newParameters, functionName: 'createContract' }
+      }
+
       await writeContractsAsync({
-        contracts: [{ ...(newParameters as any) }],
+        contracts: [{ ...(parameters as any) }],
         capabilities: getCapabilities(chainId),
       } as any)
     } catch (err) {
