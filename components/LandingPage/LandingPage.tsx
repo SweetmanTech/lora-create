@@ -7,16 +7,9 @@ import Spinner from '@/components/ui/Spinner'
 import { useAccount } from 'wagmi'
 import LoginButton from '@/components/LoginButton'
 import MediaUpload from '../MediaUpload'
-import CreateButton from '../CreateButton'
-import { base, baseSepolia } from 'viem/chains'
+import CreateButtons from './CreateButtons'
 
-export default function LandingPage({
-  chainId,
-  collectionAddress,
-}: {
-  chainId?: number
-  collectionAddress?: string
-}) {
+export default function LandingPage() {
   const { creating, name } = useZoraCreateProvider()
   const { address } = useAccount()
 
@@ -41,21 +34,7 @@ export default function LandingPage({
               <Title />
               <SaleStrategySelect />
             </div>
-            {address ? (
-              <div className="flex justify-between w-full gap-2">
-                <CreateButton
-                  chainId={chainId || baseSepolia.id}
-                  collectionAddress={collectionAddress}
-                >
-                  {collectionAddress ? 'Create on Existing' : 'Preview'}
-                </CreateButton>
-                {!collectionAddress && (
-                  <CreateButton chainId={chainId || base.id}>Publish</CreateButton>
-                )}
-              </div>
-            ) : (
-              <LoginButton />
-            )}
+            {address ? <CreateButtons /> : <LoginButton />}
           </div>
         )}
       </div>
