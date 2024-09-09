@@ -14,8 +14,7 @@ const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address
 
   useEffect(() => {
     const fetchParameters = async () => {
-      if (!address) return
-
+      if (!publicClient) return
       const creatorClient = createCreatorClient({ chainId, publicClient })
       const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
       const salesConfig = getSalesConfig(
@@ -55,10 +54,11 @@ const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address
       setParameters(newParameters)
     }
 
+    if (!address) return
     fetchParameters()
-  }, [address, chainId, collection, createMetadata, publicClient])
+  }, [address, chainId, collection])
 
-  return { parameters }
+  return { parameters, createMetadata }
 }
 
 export default useZoraCreateParameters

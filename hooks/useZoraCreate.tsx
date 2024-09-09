@@ -6,7 +6,6 @@ import { useWriteContracts } from 'wagmi/experimental'
 import { CHAIN_ID, PROFILE_APP_URL } from '@/lib/consts'
 import { usePaymasterProvider } from '@/providers/PaymasterProvider'
 import useCreateSuccess from '@/hooks/useCreateSuccess'
-import useCreateMetadata from '@/hooks/useCreateMetadata'
 import { toast } from 'react-toastify'
 import { useParams, useRouter } from 'next/navigation'
 import { Address } from 'viem'
@@ -17,13 +16,12 @@ export default function useZoraCreate() {
   const { address } = useAccount()
   const { getCapabilities } = usePaymasterProvider()
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
-  const createMetadata = useCreateMetadata()
   const { switchChainAsync } = useSwitchChain()
   const [creating, setCreating] = useState<boolean>(false)
   const params = useParams()
   const chainId = Number(params.chainId) || CHAIN_ID
   const collection = params.collection as Address | undefined
-  const { parameters } = useZoraCreateParameters(chainId, collection)
+  const { parameters, createMetadata } = useZoraCreateParameters(chainId, collection)
 
   useCreateSuccess(callsStatusId, () => push(`${PROFILE_APP_URL}/${address}`), !!params.collection)
 
