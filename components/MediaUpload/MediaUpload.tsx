@@ -6,10 +6,11 @@ import getIpfsLink from '@/lib/ipfs/getIpfsLink'
 import { useRef } from 'react'
 import NoFileSelected from './NoFileSelected'
 import AudioPlayer from './AudioPlayer'
+import Image from 'next/image'
 
 const MediaUpload = () => {
   const { imageUri, animationUri, mimeType } = useZoraCreateProvider()
-  const { fileUpload, loading, error } = useFileUpload()
+  const { fileUpload, loading, error, blurImageUrl } = useFileUpload()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleImageClick = () => {
@@ -40,13 +41,16 @@ const MediaUpload = () => {
 
     if (imageUri) {
       return (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={getIpfsLink(imageUri)}
-          className="w-full h-auto rounded-md cursor-pointer"
-          alt="Image Preview"
-          onClick={handleImageClick}
-        />
+        <div className="relative w-[296px] h-[296px]">
+          <Image
+            src={blurImageUrl || getIpfsLink(imageUri)}
+            className="w-full h-auto rounded-md cursor-pointer object-contain absolute"
+            alt="Image Preview"
+            onClick={handleImageClick}
+            blurDataURL={blurImageUrl}
+            layout="fill"
+          />
+        </div>
       )
     }
 

@@ -6,6 +6,7 @@ import { useState } from 'react'
 const useFileUpload = () => {
   const { setName, setImageUri, setAnimationUri, setMimeType, animationUri } =
     useZoraCreateProvider()
+  const [blurImageUrl, setBlurImageUrl] = useState<string>('')
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -33,6 +34,7 @@ const useFileUpload = () => {
       const { uri } = await uploadFile(file)
       if (isImage) {
         setImageUri(uri)
+        setBlurImageUrl(URL.createObjectURL(file))
         if (!animationUri) {
           setMimeType(mimeType)
         }
@@ -47,7 +49,7 @@ const useFileUpload = () => {
     setLoading(false)
   }
 
-  return { fileUpload, loading, error }
+  return { fileUpload, loading, error, blurImageUrl }
 }
 
 export default useFileUpload
