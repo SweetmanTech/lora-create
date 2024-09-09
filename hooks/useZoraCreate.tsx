@@ -21,7 +21,7 @@ export default function useZoraCreate() {
   const params = useParams()
   const chainId = Number(params.chainId) || CHAIN_ID
   const collection = params.collection as Address | undefined
-  const { parameters, createMetadata } = useZoraCreateParameters(chainId, collection)
+  const { fetchParameters, createMetadata } = useZoraCreateParameters(chainId, collection)
 
   useCreateSuccess(callsStatusId, () => push(`${PROFILE_APP_URL}/${address}`), !!params.collection)
 
@@ -32,6 +32,7 @@ export default function useZoraCreate() {
         throw new Error('No wallet connected')
       }
       await switchChainAsync({ chainId })
+      const parameters = await fetchParameters()
 
       if (!parameters) {
         throw new Error('Parameters not ready')
