@@ -19,6 +19,7 @@ const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address
 
   useEffect(() => {
     const fetchParameters = async () => {
+      if (!publicClient) return
       if (!address) return
 
       const creatorClient = createCreatorClient({ chainId, publicClient })
