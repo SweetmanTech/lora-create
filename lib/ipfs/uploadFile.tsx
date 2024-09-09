@@ -20,7 +20,9 @@ const uploadCache = {
     const digest = hashFiles(files)
     try {
       localStorage.setItem(`${this.prefix}/${digest}`, cid)
-    } catch {}
+    } catch (error) {
+      console.error(error)
+    }
   },
 }
 
