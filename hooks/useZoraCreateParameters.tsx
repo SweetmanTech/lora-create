@@ -63,7 +63,7 @@ const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address
     fetchParameters()
   }, [address, chainId, collection, metadata])
 
-  return { parameters }
+  return { parameters, createMetadata }
 }
 
 export default useZoraCreateParameters
