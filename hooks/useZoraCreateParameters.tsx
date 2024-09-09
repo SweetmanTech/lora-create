@@ -1,7 +1,7 @@
 import { createCreatorClient } from '@zoralabs/protocol-sdk'
 import { Address } from 'viem'
 import { CHAIN_ID, REFERRAL_RECIPIENT } from '@/lib/consts'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAccount, usePublicClient } from 'wagmi'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
 import useCreateMetadata from '@/hooks/useCreateMetadata'
@@ -11,10 +11,16 @@ const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address
   const publicClient = usePublicClient()
   const { address } = useAccount()
   const createMetadata = useCreateMetadata()
+  const { imageUri, animationUri, mimeType, name, isTimedSale } = createMetadata
+  const metadata = useMemo(
+    () => ({ imageUri, animationUri, mimeType, name, isTimedSale }),
+    [imageUri, animationUri, mimeType, name, isTimedSale],
+  )
 
   useEffect(() => {
     const fetchParameters = async () => {
-      if (!publicClient) return
+      if (!address) return
+
       const creatorClient = createCreatorClient({ chainId, publicClient })
       const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
       const salesConfig = getSalesConfig(
@@ -54,11 +60,10 @@ const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address
       setParameters(newParameters)
     }
 
-    if (!address) return
     fetchParameters()
-  }, [address, chainId, collection])
+  }, [address, chainId, collection, metadata])
 
-  return { parameters, createMetadata }
+  return { parameters }
 }
 
 export default useZoraCreateParameters
