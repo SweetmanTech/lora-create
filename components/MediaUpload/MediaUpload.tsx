@@ -20,7 +20,7 @@ const MediaUpload = () => {
   const renderMedia = () => {
     if (loading) {
       return (
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center left-0 top-0">
           <Spinner />
         </div>
       )
@@ -61,8 +61,8 @@ const MediaUpload = () => {
     <div className="grid w-full max-w-3xl items-center gap-4">
       <div
         className={cn(
-          'w-full relative rounded-md',
-          !imageUri && !animationUri && 'aspect-square min-h-[300px] min-w-[300px]',
+          'w-full relative rounded-md min-h-[300px] min-w-[300px]',
+          !imageUri && !animationUri && 'aspect-square',
           (loading || (!imageUri && !animationUri)) && 'border-dashed border-2 border-black',
         )}
       >
