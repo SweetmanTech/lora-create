@@ -1,4 +1,4 @@
-import { base, baseSepolia } from 'viem/chains'
+import { baseSepolia } from 'viem/chains'
 import CreateButton from '../CreateButton'
 import { useParams } from 'next/navigation'
 
@@ -11,7 +11,7 @@ const CreateButtons = () => {
       <CreateButton chainId={baseSepolia.id}>
         {collection ? 'Create on Existing' : 'Preview'}
       </CreateButton>
-      {!collection && <CreateButton chainId={base.id}>Publish</CreateButton>}
+      {!collection && <CreateButton>Publish</CreateButton>}
     </div>
   )
 }

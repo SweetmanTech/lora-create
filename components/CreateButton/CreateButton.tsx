@@ -1,9 +1,10 @@
 'use client'
 
+import { base } from 'viem/chains'
 import Button from '../Button'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 
-const CreateButton = ({ children, chainId }: any) => {
+const CreateButton = ({ children, chainId = base.id }: any) => {
   const { create } = useZoraCreateProvider()
 
   return (
