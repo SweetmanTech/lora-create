@@ -5,10 +5,11 @@ import { useParams } from 'next/navigation'
 const CreateButtons = () => {
   const params = useParams()
   const collection = params.collection as string
+  const chainId = params.chainId
 
   return (
     <div className="flex justify-between w-full gap-2">
-      <CreateButton chainId={baseSepolia.id}>
+      <CreateButton chainId={collection ? Number(chainId) : baseSepolia.id}>
         {collection ? 'Create on Existing' : 'Preview'}
       </CreateButton>
       {!collection && <CreateButton>Publish</CreateButton>}
