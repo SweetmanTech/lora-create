@@ -1,16 +1,16 @@
 import { createCreatorClient } from '@zoralabs/protocol-sdk'
 import { Address } from 'viem'
-import { CHAIN_ID, REFERRAL_RECIPIENT } from '@/lib/consts'
+import { REFERRAL_RECIPIENT } from '@/lib/consts'
 import { useAccount, usePublicClient } from 'wagmi'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
 import useCreateMetadata from '@/hooks/useCreateMetadata'
 
-const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address) => {
+const useZoraCreateParameters = (collection: Address) => {
   const publicClient = usePublicClient()
   const { address } = useAccount()
   const createMetadata = useCreateMetadata()
 
-  const fetchParameters = async () => {
+  const fetchParameters = async (chainId: number) => {
     if (!publicClient) return
     const creatorClient = createCreatorClient({ chainId, publicClient })
     const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { useWriteContracts } from 'wagmi/experimental'
-import { CHAIN_ID, PROFILE_APP_URL } from '@/lib/consts'
+import { PROFILE_APP_URL } from '@/lib/consts'
 import { usePaymasterProvider } from '@/providers/PaymasterProvider'
 import useCreateSuccess from '@/hooks/useCreateSuccess'
 import { toast } from 'react-toastify'
@@ -19,20 +19,20 @@ export default function useZoraCreate() {
   const { switchChainAsync } = useSwitchChain()
   const [creating, setCreating] = useState<boolean>(false)
   const params = useParams()
-  const chainId = Number(params.chainId) || CHAIN_ID
+
   const collection = params.collection as Address | undefined
-  const { fetchParameters, createMetadata } = useZoraCreateParameters(chainId, collection)
+  const { fetchParameters, createMetadata } = useZoraCreateParameters(collection)
 
   useCreateSuccess(callsStatusId, () => push(`${PROFILE_APP_URL}/${address}`), !!params.collection)
 
-  const create = async () => {
+  const create = async (chainId) => {
     setCreating(true)
     try {
       if (!address) {
         throw new Error('No wallet connected')
       }
       await switchChainAsync({ chainId })
-      const parameters = await fetchParameters()
+      const parameters = await fetchParameters(chainId)
 
       if (!parameters) {
         throw new Error('Parameters not ready')
