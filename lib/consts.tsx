@@ -17,4 +17,4 @@ export const MAX_FILE_SIZE = 5 * ONE_MB
 
 export const PROFILE_APP_URL = process.env.NEXT_PUBLIC_PROFILE_APP_URL || 'https://profile.myco.wtf'
 
-export const SUPPORTED_FILES = ['pdf', 'audio', 'video']
+export const SUPPORTED_FILES = ['image', 'audio', 'video']
