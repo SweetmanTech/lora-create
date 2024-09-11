@@ -1,16 +1,19 @@
 import { createCreatorClient } from '@zoralabs/protocol-sdk'
-import { Address } from 'viem'
+import { Address, isAddress } from 'viem'
 import { CHAIN_ID, REFERRAL_RECIPIENT } from '@/lib/consts'
 import { useEffect, useState } from 'react'
 import { useAccount, usePublicClient } from 'wagmi'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
 import useCreateMetadata from '@/hooks/useCreateMetadata'
+import { useSearchParams } from 'next/navigation'
 
 const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address) => {
+  const search = useSearchParams()
   const [parameters, setParameters] = useState({})
   const publicClient = usePublicClient()
   const { address } = useAccount()
   const createMetadata = useCreateMetadata()
+  const defaultAdmin = search.get('defaultAdmin')
 
   useEffect(() => {
     const fetchParameters = async () => {
@@ -32,7 +35,7 @@ const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address
               createReferral: REFERRAL_RECIPIENT,
               salesConfig,
             },
-            account: address,
+            account: isAddress(defaultAdmin) ? defaultAdmin : address,
           },
         )
         newParameters = existingParameters
@@ -47,7 +50,7 @@ const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address
             createReferral: REFERRAL_RECIPIENT,
             salesConfig,
           },
-          account: address,
+          account: isAddress(defaultAdmin) ? defaultAdmin : address,
         })
         newParameters = { ...newContractParameters, functionName: 'createContract' }
       }
@@ -56,7 +59,7 @@ const useZoraCreateParameters = (chainId: number = CHAIN_ID, collection: Address
     }
 
     fetchParameters()
-  }, [address, chainId, collection, createMetadata, publicClient])
+  }, [defaultAdmin, address, chainId, collection, createMetadata, publicClient])
 
   return { parameters }
 }
