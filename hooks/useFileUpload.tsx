@@ -1,5 +1,6 @@
 import { MAX_FILE_SIZE, ONE_MB } from '@/lib/consts'
 import { uploadFile } from '@/lib/ipfs/uploadFile'
+import { useProfileProvider } from '@/providers/ProfileProvider'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import { useState } from 'react'
 
@@ -8,6 +9,7 @@ const useFileUpload = () => {
     useZoraCreateProvider()
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+  const user = useProfileProvider()
 
   const fileUpload = async (event) => {
     setError('')
@@ -18,7 +20,7 @@ const useFileUpload = () => {
       if (!file) {
         throw new Error()
       }
-      if (file.size > MAX_FILE_SIZE) {
+      if (!user.isPro && file.size > MAX_FILE_SIZE) {
         throw new Error(`File size exceeds the maximum limit of ${MAX_FILE_SIZE / ONE_MB}MB.`)
       }
 
