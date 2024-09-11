@@ -1,6 +1,6 @@
-import getProfile from '@/lib/getProfile';
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { useAccount } from 'wagmi'
+import getProfile from '@/lib/actions/getProfile';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
 
 const DEFAULT: {
   isPro: boolean;
@@ -14,7 +14,7 @@ const ProfileProvider = ({ children }: any) => {
   const [profile, setProfile] = useState(DEFAULT)
 
   useEffect(() => {
-    if (address) getProfile(address).then(setProfile)
+    if (address) getProfile(address).then(setProfile).catch(console.error)
   }, [address])
 
   return (
@@ -30,4 +30,5 @@ const useProfileProvider = () => {
   return context
 }
 
-export { ProfileProvider, useProfileProvider }
+export { ProfileProvider, useProfileProvider };
+

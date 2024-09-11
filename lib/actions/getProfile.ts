@@ -1,5 +1,7 @@
+"use server"
+
 import { Address } from "viem";
-import { API_APP_URL } from "./consts";
+import { API_APP_URL } from "../consts";
 
 async function getProfile(address: Address) {
   const res = await fetch(`${API_APP_URL}/api/profile?address=${address}`);
