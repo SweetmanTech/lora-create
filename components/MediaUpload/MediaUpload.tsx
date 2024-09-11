@@ -66,7 +66,14 @@ const MediaUpload = () => {
           (loading || (!imageUri && !animationUri)) && 'border-dashed border-2 border-black',
         )}
       >
-        <input ref={fileInputRef} id="media" type="file" className="hidden" onChange={fileUpload} />
+        <input
+          ref={fileInputRef}
+          id="media"
+          type="file"
+          className="hidden"
+          onChange={fileUpload}
+          accept="image/*, audio/*, video/*"
+        />
         {renderMedia()}
       </div>
       {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
