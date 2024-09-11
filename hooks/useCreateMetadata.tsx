@@ -8,17 +8,26 @@ const useCreateMetadata = () => {
   const [mimeType, setMimeType] = useState<string>('')
   const [animationUri, setAnimationUri] = useState<string>('')
 
-  const getUri = async () =>
-    await uploadJson({
+  const getUri = async () => {
+    if (!name || !imageUri) return null
+
+    const metadata: any = {
       name,
       description: '',
       image: imageUri,
-      animation_url: animationUri,
-      content: {
+    }
+
+    if (animationUri) {
+      metadata.animation_url = animationUri
+      metadata.content = {
         mime: mimeType,
         uri: animationUri,
-      },
-    })
+      }
+    }
+
+    const uri = await uploadJson(metadata)
+    return uri
+  }
 
   return {
     animationUri,
