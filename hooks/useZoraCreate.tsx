@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import { useParams, useRouter } from 'next/navigation'
 import { Address } from 'viem'
 import useZoraCreateParameters from './useZoraCreateParameters'
+import handleTxError from '@/lib/handleTxError'
 
 export default function useZoraCreate() {
   const { push } = useRouter()
@@ -44,7 +45,7 @@ export default function useZoraCreate() {
       } as any)
     } catch (err) {
       setCreating(false)
-      toast.error("Couldn't create contract")
+      handleTxError(err)
       console.log(err.message)
     }
   }
