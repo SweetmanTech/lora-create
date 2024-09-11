@@ -2,6 +2,7 @@ import { MAX_FILE_SIZE, ONE_MB } from '@/lib/consts'
 import { uploadFile } from '@/lib/ipfs/uploadFile'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const useFileUpload = () => {
   const { setName, setImageUri, setAnimationUri, setMimeType, animationUri } =
@@ -16,6 +17,13 @@ const useFileUpload = () => {
 
     try {
       const file = event.target.files[0]
+
+      if (file.name.includes('.heic')) {
+        setLoading(false)
+        toast.error('Zora does not support .heic file.')
+        return
+      }
+
       if (!file) {
         throw new Error()
       }
