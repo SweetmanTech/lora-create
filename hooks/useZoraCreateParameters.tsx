@@ -14,6 +14,8 @@ const useZoraCreateParameters = (collection: Address) => {
     if (!publicClient) return
     const creatorClient = createCreatorClient({ chainId, publicClient })
     const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
+    if (!cc0MusicIpfsHash) return
+
     const salesConfig = getSalesConfig(
       createMetadata.isTimedSale ? 'ZoraTimedSaleStrategy' : 'ZoraFixedPriceSaleStrategy',
     )
