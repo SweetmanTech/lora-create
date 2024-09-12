@@ -1,6 +1,14 @@
 import saveFile from '@/lib/ipfs/saveFile'
 import { NextRequest } from 'next/server'
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '5mb'
+    }
+  },
+}
+
 export async function POST(request: NextRequest) {
   const data = await request.formData()
   const file: File | null = data.get('file') as unknown as File
