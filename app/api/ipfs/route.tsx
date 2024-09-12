@@ -1,13 +1,7 @@
 import saveFile from '@/lib/ipfs/saveFile'
 import { NextRequest } from 'next/server'
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '5mb'
-    }
-  },
-}
+export const runtime = 'edge'
 
 export async function POST(request: NextRequest) {
   const data = await request.formData()
