@@ -5,8 +5,10 @@ import isSupportedFileType from '@/lib/isSupportedFileType'
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useAccount } from 'wagmi'
 
 const useFileUpload = () => {
+  const { address } = useAccount()
   const { setName, setImageUri, setAnimationUri, setMimeType, animationUri } =
     useZoraCreateProvider()
   const [blurImageUrl, setBlurImageUrl] = useState<string>('')
@@ -21,9 +23,8 @@ const useFileUpload = () => {
     try {
       const file = event.target.files[0]
       if (!file) throw new Error()
-
-      const { isPro } = await getIsPro("0x72a31a5a9568cd9ec1814c9b68df0059317bff87")
-      console.log({ isPro })
+      const { isPro } = await getIsPro(address)
+      console.log({ isPro, address })
 
       if (!isPro && file.size > MAX_FILE_SIZE) {
         throw new Error(`File size exceeds the maximum limit of ${MAX_FILE_SIZE / ONE_MB}MB.`)
