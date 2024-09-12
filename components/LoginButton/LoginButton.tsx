@@ -1,17 +1,18 @@
 'use client'
 
 import { useAccount, useDisconnect } from 'wagmi'
-import useConnectWallet from '@/hooks/useConnectWallet'
 import Button from '@/components/Button'
+import { useCoinbaseSmartWalletProvider } from '@/providers/CoinbaseSmartWalletProvider'
 
 export default function LoginButton() {
   const { status } = useAccount()
-  const { connectWallet } = useConnectWallet()
   const { disconnect } = useDisconnect()
+  const { isAuthorized, connect } = useCoinbaseSmartWalletProvider()
 
   if (['connecting', 'reconnecting'].includes(status)) return <Button disabled>Loading...</Button>
 
-  if (status === 'connected') return <Button onClick={disconnect}>Disconnect</Button>
+  if (status === 'connected' && isAuthorized)
+    return <Button onClick={disconnect}>Disconnect</Button>
 
-  return <Button onClick={connectWallet}>Connect</Button>
+  return <Button onClick={connect}>Connect</Button>
 }

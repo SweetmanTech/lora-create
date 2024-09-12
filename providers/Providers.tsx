@@ -3,12 +3,15 @@
 import { ZoraCreateProvider } from './ZoraCreateProvider'
 import { PaymasterProvider } from './PaymasterProvider'
 import WagmiProvider from './WagmiProvider'
+import { CoinbaseSmartWalletProvider } from './CoinbaseSmartWalletProvider'
 
 const Providers = ({ children }: { children: React.ReactNode }) => (
   <WagmiProvider>
-    <PaymasterProvider>
-      <ZoraCreateProvider>{children}</ZoraCreateProvider>
-    </PaymasterProvider>
+    <CoinbaseSmartWalletProvider>
+      <PaymasterProvider>
+        <ZoraCreateProvider>{children}</ZoraCreateProvider>
+      </PaymasterProvider>
+    </CoinbaseSmartWalletProvider>
   </WagmiProvider>
 )
 

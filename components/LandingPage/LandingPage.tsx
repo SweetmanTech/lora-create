@@ -9,9 +9,11 @@ import LoginButton from '@/components/LoginButton'
 import MediaUpload from '../MediaUpload'
 import CreateButtons from './CreateButtons'
 import { FileUploadProvider } from '@/providers/FileUploadProvider'
+import { useCoinbaseSmartWalletProvider } from '@/providers/CoinbaseSmartWalletProvider'
 
 export default function LandingPage() {
   const { creating, name } = useZoraCreateProvider()
+  const { isAuthorized } = useCoinbaseSmartWalletProvider()
   const { address } = useAccount()
 
   if (creating) {
@@ -37,7 +39,7 @@ export default function LandingPage() {
               <Title />
               <SaleStrategySelect />
             </div>
-            {address ? <CreateButtons /> : <LoginButton />}
+            {address && isAuthorized ? <CreateButtons /> : <LoginButton />}
           </div>
         )}
       </div>
