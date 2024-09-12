@@ -13,8 +13,8 @@ const wagmiConfig = createConfig({
   transports: {
     [base.id]: http(),
     [baseSepolia.id]: http(),
-    [zora.id]: http('https://rpc.zora.energy'),
-    [zoraSepolia.id]: http('https://sepolia.rpc.zora.energy'),
+    [zora.id]: http(),
+    [zoraSepolia.id]: http(),
   } as any,
 })
 
