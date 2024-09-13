@@ -4,12 +4,14 @@ import { useRef, useState } from 'react'
 import Button from '../Button'
 import { Pause, Play } from 'lucide-react'
 import { Slider } from '../ui/Slider'
+import { useFileUploadProvider } from '@/providers/FileUploadProvider'
 
 const AudioPlayer = ({ onClick }) => {
   const { imageUri, animationUri } = useZoraCreateProvider()
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
   const audioRef = useRef<HTMLAudioElement>(null)
+  const { blurImageUrl } = useFileUploadProvider()
 
   const togglePlayPause = () => {
     if (audioRef.current) {
@@ -42,7 +44,7 @@ const AudioPlayer = ({ onClick }) => {
       <div className="relative" onClick={onClick}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={imageUri ? getIpfsLink(imageUri) : ''}
+          src={blurImageUrl || getIpfsLink(imageUri)}
           alt="Audio cover"
           className="w-full h-auto cursor-pointer"
         />

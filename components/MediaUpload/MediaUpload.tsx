@@ -1,5 +1,4 @@
 import { useZoraCreateProvider } from '@/providers/ZoraCreateProvider'
-import useFileUpload from '@/hooks/useFileUpload'
 import { cn } from '@/lib/utils'
 import Spinner from '@/components/ui/Spinner'
 import getIpfsLink from '@/lib/ipfs/getIpfsLink'
@@ -7,10 +6,12 @@ import { useRef } from 'react'
 import NoFileSelected from './NoFileSelected'
 import AudioPlayer from './AudioPlayer'
 import Image from 'next/image'
+import VideoPlayer from './VideoPlayer'
+import { useFileUploadProvider } from '@/providers/FileUploadProvider'
 
 const MediaUpload = () => {
   const { imageUri, animationUri, mimeType } = useZoraCreateProvider()
-  const { fileUpload, loading, error, blurImageUrl } = useFileUpload()
+  const { fileUpload, loading, error, blurImageUrl } = useFileUploadProvider()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleImageClick = () => {
@@ -31,12 +32,7 @@ const MediaUpload = () => {
     }
 
     if (mimeType.includes('video')) {
-      return (
-        <video controls className="w-full rounded-md">
-          <source src={getIpfsLink(animationUri)} type={mimeType} />
-          Your browser does not support the video element.
-        </video>
-      )
+      return <VideoPlayer onClick={handleImageClick} />
     }
 
     if (imageUri) {
