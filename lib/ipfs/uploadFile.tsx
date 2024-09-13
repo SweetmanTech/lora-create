@@ -1,4 +1,5 @@
 import { hashFiles } from './hash'
+import saveFile from './saveFile'
 
 export type IPFSUploadResponse = {
   cid: string
@@ -28,18 +29,22 @@ const uploadCache = {
   },
 }
 
-export const uploadFile = async (file: File): Promise<IPFSUploadResponse> => {
+export const uploadFile = async (file: File, jwt: string | null): Promise<IPFSUploadResponse> => {
   try {
     const data = new FormData()
     data.set('file', file)
     const cached = uploadCache.get([file])
     if (cached) return cached
-    const res = await fetch('/api/ipfs', {
-      method: 'POST',
-      body: data,
-    })
-    const json = await res.json()
-    const { cid } = json
+
+    let cid: any;
+    if (jwt) {
+      cid = await saveFile(data, jwt)
+    } else {
+      const res = await fetch('/api/ipfs', { method: 'POST', body: data })
+      const json = await res.json()
+      cid = json.cid
+    }
+
     uploadCache.put([file], cid)
     return { cid, uri: `ipfs://${cid}` }
   } catch (error) {
