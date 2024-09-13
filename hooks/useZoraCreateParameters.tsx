@@ -5,7 +5,6 @@ import { useAccount, usePublicClient } from 'wagmi'
 import { useSearchParams } from 'next/navigation'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
 import useCreateMetadata from '@/hooks/useCreateMetadata'
-import { useMemo } from 'react'
 
 const useZoraCreateParameters = (collection: Address) => {
   const publicClient = usePublicClient()
@@ -13,13 +12,7 @@ const useZoraCreateParameters = (collection: Address) => {
   const { address } = useAccount()
   const createMetadata = useCreateMetadata()
   const payoutParam = searchParams.get('payoutRecipient')
-
-  const defaultAdmin = useMemo(() => {
-    if (typeof window === 'undefined') return null
-
-    const params = new URLSearchParams(window.location.search)
-    return params.get('defaultAdmin')
-  }, [])
+  const defaultAdmin = searchParams.get('defaultAdmin')
 
   const fetchParameters = async (chainId: number) => {
     if (!publicClient) return
