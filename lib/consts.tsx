@@ -1,14 +1,7 @@
-import { base, baseSepolia } from 'wagmi/chains'
+import { base } from 'wagmi/chains'
 
-export const IS_TESTNET = process.env.NEXT_PUBLIC_TEST === 'true'
-export const CHAIN = IS_TESTNET ? baseSepolia : base
-export const CHAIN_ID = CHAIN.id
+export const CHAIN_ID = base.id
 
-// Zora
-export const DROP_ADDRESS = IS_TESTNET
-  ? '0x0b93a56db47797142076e24c520c846c9bd0d6fa' // base sepolia
-  : '0x16F1FC98282AFDA367999012027b5A3fA656a713' // base mainnet
-export const ZORA_PRICE = '777000000000000'
 export const COMMENT = 'myco.wtf'
 export const REFERRAL_RECIPIENT = '0x749B7b7A6944d72266Be9500FC8C221B6A7554Ce'
 
@@ -23,3 +16,5 @@ export const ONE_MB = 1024 * 1024
 export const MAX_FILE_SIZE = 5 * ONE_MB
 
 export const PROFILE_APP_URL = process.env.NEXT_PUBLIC_PROFILE_APP_URL || 'https://profile.myco.wtf'
+
+export const SUPPORTED_FILES = ['image', 'audio', 'video']
