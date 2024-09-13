@@ -1,5 +1,7 @@
+"use server"
+
 import { Address } from "viem";
-import { API_APP_URL } from "./consts";
+import { API_APP_URL } from "../consts";
 
 async function getIsPro(address: Address, maxRetries = 1) {
   for (let i = 0; i < maxRetries; i++) {

@@ -1,9 +1,6 @@
-import { Address } from "viem"
-
-async function getIpfsJwt(address: Address): Promise<string | null> {
+async function getIpfsJwt(): Promise<string | null> {
   try {
-    if(!address) throw Error('address is missing')
-    const res = await fetch(`/api/ipfs/generate-jwt?address=${address}`)
+    const res = await fetch('/api/ipfs/generate-jwt')
     const data = await res.json()
     if (!res.ok) throw Error(data?.message ?? res.statusText);
 
