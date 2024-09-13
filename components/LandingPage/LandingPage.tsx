@@ -10,7 +10,7 @@ import MediaUpload from '../MediaUpload'
 import CreateButtons from './CreateButtons'
 
 export default function LandingPage() {
-  const { creating, imageUri } = useZoraCreateProvider()
+  const { creating, name } = useZoraCreateProvider()
   const { address } = useAccount()
 
   if (creating) {
@@ -28,7 +28,7 @@ export default function LandingPage() {
         <div className="md:w-1/2 flex flex-col items-center gap-5">
           <MediaUpload />
         </div>
-        {imageUri && (
+        {name !== undefined && (
           <div className="mt-4 md:mt-0 md:w-1/2 flex flex-col items-center gap-3">
             <div className="w-full flex flex-col items-start gap-4">
               <Title />
