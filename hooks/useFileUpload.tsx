@@ -35,12 +35,16 @@ const useFileUpload = () => {
         return
       }
 
+      if (!isSupportedFileType(file.type)) {
+        toast.error('File type is not supported!')
+        setLoading(false)
+        return
+      }
+
       const isImage = mimeType.includes('image')
 
-      if (isImage) {
-        const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, '')
-        setName(fileNameWithoutExtension)
-      }
+      const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, '')
+      setName(fileNameWithoutExtension)
 
       const { uri } = await uploadFile(file, JWT)
       if (isImage) {

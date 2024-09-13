@@ -29,7 +29,7 @@ const uploadCache = {
   },
 }
 
-export const uploadFile = async (file: File, jwt: string | null): Promise<IPFSUploadResponse> => {
+export const uploadFile = async (file: File, jwt?:string): Promise<IPFSUploadResponse> => {
   try {
     const data = new FormData()
     data.set('file', file)
