@@ -4,13 +4,19 @@ import { REFERRAL_RECIPIENT } from '@/lib/consts'
 import { useAccount, usePublicClient } from 'wagmi'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
 import useCreateMetadata from '@/hooks/useCreateMetadata'
-import { useSearchParams } from 'next/navigation'
+import { useMemo } from 'react'
 
 const useZoraCreateParameters = (collection: Address) => {
   const publicClient = usePublicClient()
   const { address } = useAccount()
   const createMetadata = useCreateMetadata()
-  const defaultAdmin = useSearchParams().get('defaultAdmin')
+
+  const defaultAdmin = useMemo(() => {
+    if (typeof window === 'undefined') return null
+
+    const params = new URLSearchParams(window.location.search)
+    return params.get('defaultAdmin')
+  }, [])
 
   const fetchParameters = async (chainId: number) => {
     if (!publicClient) return
