@@ -2,7 +2,7 @@ import { uploadJson } from '@/lib/ipfs/uploadJson'
 import { useState } from 'react'
 
 const useCreateMetadata = () => {
-  const [name, setName] = useState<string>('')
+  const [name, setName] = useState<string>()
   const [isTimedSale, setIsTimedSale] = useState<boolean>(true)
   const [imageUri, setImageUri] = useState<string>('')
   const [mimeType, setMimeType] = useState<string>('')
