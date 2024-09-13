@@ -12,6 +12,7 @@ const useZoraCreateParameters = (collection: Address) => {
   const { address } = useAccount()
   const createMetadata = useCreateMetadata()
   const payoutParam = searchParams.get('payoutRecipient')
+  const defaultAdmin = searchParams.get('defaultAdmin')
 
   const fetchParameters = async (chainId: number) => {
     if (!publicClient) return
@@ -35,7 +36,7 @@ const useZoraCreateParameters = (collection: Address) => {
           salesConfig,
           payoutRecipient,
         },
-        account: address,
+        account: isAddress(defaultAdmin) ? defaultAdmin : address,
       })
       newParameters = existingParameters
     } else {
@@ -50,7 +51,7 @@ const useZoraCreateParameters = (collection: Address) => {
           salesConfig,
           payoutRecipient,
         },
-        account: address,
+        account: isAddress(defaultAdmin) ? defaultAdmin : address,
       })
       newParameters = { ...newContractParameters, functionName: 'createContract' }
     }
