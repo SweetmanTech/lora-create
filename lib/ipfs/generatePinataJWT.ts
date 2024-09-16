@@ -33,7 +33,7 @@ async function generatePinataJWT() {
 
   if (!res.ok) throw (data ?? { message: res.statusText })
 
-  return data as { JWT: string };
+  return { JWT: data?.JWT };
 }
 
 export default generatePinataJWT;
