@@ -1,6 +1,7 @@
 import { COLLECTION_TYPE } from '@/types/collection'
 import { useQuery } from '@tanstack/react-query'
-import { createContext, useContext, useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useAccount } from 'wagmi'
 
 const CollectionContext = createContext(null)
@@ -8,6 +9,7 @@ const CollectionContext = createContext(null)
 const CollectionProvider = ({ children }) => {
   const { address } = useAccount()
   const [selectedCollection, setSelectedCollection] = useState<COLLECTION_TYPE | null>(null)
+  const { push } = useRouter()
   const getCollections = async (): Promise<COLLECTION_TYPE[]> => {
     const response = await fetch(`/api/collections?address=${address}`)
     const data = await response.json()
@@ -18,6 +20,15 @@ const CollectionProvider = ({ children }) => {
     queryKey: ['getCollections'],
     queryFn: getCollections,
   })
+
+  useEffect(() => {
+    if (selectedCollection) {
+      push(`/${selectedCollection.chainId}/${selectedCollection.address}`)
+      return
+    }
+
+    push('/')
+  }, [selectedCollection])
 
   const value = useMemo(
     () => ({

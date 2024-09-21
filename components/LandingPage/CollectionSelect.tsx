@@ -4,7 +4,7 @@ import Collection from './Collection'
 import Image from 'next/image'
 
 const CollectionSelect = () => {
-  const { collections, selectedCollection } = useCollectionProvider()
+  const { collections, selectedCollection, setSelectedCollection } = useCollectionProvider()
   const [isOpenDropList, setIsOpenDropList] = useState(false)
 
   return (
@@ -26,10 +26,14 @@ const CollectionSelect = () => {
           py-2 border border-black rounded-md h-[160px] overflow-y-auto
           flex flex-col items-start gap-y-2 ${isOpenDropList ? '' : 'hidden pointer-events-none'}`}
           >
-            <div className="px-2 flex gap-2 py-2 border-b border-dashed border-b-black w-full">
+            <button
+              className="px-2 flex gap-2 py-2 border-b border-dashed border-b-black w-full"
+              type="button"
+              onClick={() => setSelectedCollection(null)}
+            >
               <Image src={'/icons/New.svg'} width={20} height={20} alt="" />
               <p>Create Collection</p>
-            </div>
+            </button>
             {collections?.map((collection) => (
               <Collection key={collection.address} collection={collection} />
             ))}
