@@ -29,14 +29,14 @@ const uploadCache = {
   },
 }
 
-export const uploadFile = async (file: File, jwt?:string): Promise<IPFSUploadResponse> => {
+export const uploadFile = async (file: File, jwt?: string): Promise<IPFSUploadResponse> => {
   try {
     const data = new FormData()
     data.set('file', file)
     const cached = uploadCache.get([file])
     if (cached) return cached
 
-    let cid: any;
+    let cid: any
     if (jwt) {
       cid = await saveFile(data, jwt)
     } else {

@@ -9,6 +9,7 @@ import LoginButton from '@/components/LoginButton'
 import MediaUpload from '../MediaUpload'
 import CreateButtons from './CreateButtons'
 import { FileUploadProvider } from '@/providers/FileUploadProvider'
+import CollectionSelect from './CollectionSelect'
 
 export default function LandingPage() {
   const { creating, name } = useZoraCreateProvider()
@@ -40,6 +41,7 @@ export default function LandingPage() {
             {address ? <CreateButtons /> : <LoginButton />}
           </div>
         )}
+        <CollectionSelect />
       </div>
     </div>
   )
