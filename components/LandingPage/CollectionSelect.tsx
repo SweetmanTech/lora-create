@@ -22,7 +22,7 @@ const CollectionSelect = () => {
             <p className="text-left">Create Collection</p>
           )}
           <div
-            className={`absolute w-full left-0 top-[100%]
+            className={`absolute w-full left-0 top-[100%] bg-background
           ${collections?.length > 0 ? 'py-2' : 'pt-2'} border border-black rounded-md max-h-[160px] overflow-y-auto
           flex flex-col items-start gap-y-2 ${isOpenDropList ? '' : 'hidden pointer-events-none'}`}
           >
