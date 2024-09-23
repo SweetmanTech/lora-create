@@ -18,13 +18,14 @@ const Collection = ({ collection }: { collection: COLLECTION_TYPE }) => {
       {metadata && (
         <>
           <div className="relative">
-            <Image
-              src={getIpfsLink(metadata.image)}
-              alt=""
-              width={40}
-              height={40}
-              className="rounded-md overflow-hidden"
-            />
+            <div className="w-10 aspect-[1/1] relative overflow-hidden">
+              <Image
+                src={getIpfsLink(metadata.image)}
+                alt=""
+                layout="fill"
+                className="rounded-md overflow-hidden absolute size-full"
+              />
+            </div>
             <Image
               src={getChainIcon(collection.chainId)}
               alt=""

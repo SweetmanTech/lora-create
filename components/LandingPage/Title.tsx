@@ -6,7 +6,7 @@ const Title = () => {
   const { name, setName } = useZoraCreateProvider()
 
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="flex flex-col items-start w-full gap-2">
       <Label htmlFor="title">Title</Label>
       <Input
         id="title"
