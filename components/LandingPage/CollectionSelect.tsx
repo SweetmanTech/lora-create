@@ -23,10 +23,12 @@ const CollectionSelect = () => {
           )}
           <div
             className={`absolute w-full left-0 top-[100%]
-          py-2 border border-black rounded-md h-[160px] overflow-y-auto
+          ${collections?.length > 0 ? 'py-2' : 'pt-2'} border border-black rounded-md max-h-[160px] overflow-y-auto
           flex flex-col items-start gap-y-2 ${isOpenDropList ? '' : 'hidden pointer-events-none'}`}
           >
-            <div className="px-2 flex gap-2 py-2 border-b border-dashed border-b-black w-full">
+            <div
+              className={`px-2 flex gap-2 py-2 w-full ${collections?.length > 0 ? 'border-b border-dashed border-b-black' : ''}`}
+            >
               <Image src={'/icons/New.svg'} width={20} height={20} alt="" />
               <p>Create Collection</p>
             </div>
