@@ -32,6 +32,7 @@ export default function LandingPage() {
             <MediaUpload />
           </FileUploadProvider>
         </div>
+        {!name && <CollectionSelect />}
         {name !== undefined && (
           <div className="mt-4 md:mt-0 w-full flex flex-col items-center gap-3">
             <div className="w-full flex flex-col items-start gap-4">
@@ -41,7 +42,6 @@ export default function LandingPage() {
             {address ? <CreateButtons /> : <LoginButton />}
           </div>
         )}
-        {!name && <CollectionSelect />}
       </div>
     </div>
   )
