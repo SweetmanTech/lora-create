@@ -22,12 +22,12 @@ const CollectionSelect = () => {
             <p className="text-left">Create Collection</p>
           )}
           <div
-            className={`absolute w-full left-0 top-[100%]
-          py-2 border border-black rounded-md h-[160px] overflow-y-auto
+            className={`absolute w-full left-0 top-[100%] bg-background
+          ${collections?.length > 0 ? 'py-2' : 'pt-2'} border border-black rounded-md max-h-[160px] overflow-y-auto
           flex flex-col items-start gap-y-2 ${isOpenDropList ? '' : 'hidden pointer-events-none'}`}
           >
             <button
-              className="px-2 flex gap-2 py-2 border-b border-dashed border-b-black w-full"
+              className={`px-2 flex gap-2 py-2 border-b border-dashed border-b-black w-full ${collections?.length > 0 ? 'border-b border-dashed border-b-black' : ''}`}
               type="button"
               onClick={() => setSelectedCollection(null)}
             >
