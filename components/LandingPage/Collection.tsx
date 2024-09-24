@@ -28,7 +28,7 @@ const Collection = ({ collection }: { collection: COLLECTION_TYPE }) => {
             </div>
             <Image
               src={getChainIcon(collection.chainId)}
-              alt=""
+              alt="chain icon"
               width={15}
               height={15}
               className="rounded-full overflow-hidden absolute right-[-3px] bottom-[-3px]"
