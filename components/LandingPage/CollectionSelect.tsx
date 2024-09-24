@@ -4,7 +4,8 @@ import Collection from './Collection'
 import Image from 'next/image'
 
 const CollectionSelect = () => {
-  const { collections, selectedCollection, setSelectedCollection } = useCollectionProvider()
+  const { collections, selectedCollection, setSelectedCollection, metadatas } =
+    useCollectionProvider()
   const [isOpenDropList, setIsOpenDropList] = useState(false)
 
   return (
@@ -17,7 +18,7 @@ const CollectionSelect = () => {
           onClick={() => setIsOpenDropList(!isOpenDropList)}
         >
           {selectedCollection ? (
-            <Collection collection={selectedCollection} />
+            <Collection collection={selectedCollection} metadata={selectedCollection.metadata} />
           ) : (
             <p className="text-left">Create Collection</p>
           )}
@@ -34,9 +35,15 @@ const CollectionSelect = () => {
               <Image src={'/icons/New.svg'} width={20} height={20} alt="" />
               <p>Create Collection</p>
             </button>
-            {collections?.map((collection) => (
-              <Collection key={collection.address} collection={collection} />
-            ))}
+            {collections &&
+              metadatas &&
+              collections?.map((collection, index) => (
+                <Collection
+                  key={collection.address}
+                  collection={collection}
+                  metadata={metadatas[index]}
+                />
+              ))}
           </div>
         </button>
       </div>

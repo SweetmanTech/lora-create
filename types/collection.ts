@@ -1,7 +1,7 @@
 import { Address } from 'viem'
 
 export type COLLECTION_TYPE = {
-  tokenCreated: number
+  tokensCreated: number
   address: Address
   chainId: number
 }

@@ -1,19 +1,29 @@
-import useCollection from '@/hooks/useCollection'
 import getChainIcon from '@/lib/getChainIcon'
 import getIpfsLink from '@/lib/ipfs/getIpfsLink'
 import { useCollectionProvider } from '@/providers/CollectionProvider'
 import { COLLECTION_TYPE } from '@/types/collection'
+import { METADATA_TYPE } from '@/types/metadata'
 import Image from 'next/image'
 
-const Collection = ({ collection }: { collection: COLLECTION_TYPE }) => {
-  const metadata = useCollection(collection)
+const Collection = ({
+  metadata,
+  collection,
+}: {
+  metadata: METADATA_TYPE
+  collection: COLLECTION_TYPE
+}) => {
   const { setSelectedCollection } = useCollectionProvider()
 
   return (
     <button
       className={`flex gap-2 items-center px-2 ${!metadata && 'hidden'}`}
       type="button"
-      onClick={() => setSelectedCollection(collection)}
+      onClick={() =>
+        setSelectedCollection({
+          ...collection,
+          metadata,
+        })
+      }
     >
       {metadata && (
         <>
