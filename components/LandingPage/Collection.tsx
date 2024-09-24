@@ -33,7 +33,7 @@ const Collection = ({
                 src={getIpfsLink(metadata.image)}
                 alt=""
                 layout="fill"
-                className="rounded-md overflow-hidden absolute size-full"
+                className="rounded-md overflow-hidden absolute object-cover object-center"
               />
             </div>
             <Image
