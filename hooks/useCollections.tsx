@@ -33,6 +33,7 @@ const useCollections = () => {
     }
 
     push('/')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCollection])
 
   useEffect(() => {
