@@ -5,22 +5,26 @@ import { useAccount, usePublicClient } from 'wagmi'
 import { useSearchParams } from 'next/navigation'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
 import useCreateMetadata from '@/hooks/useCreateMetadata'
+import useCreatorAddress from './useCreatorAddress'
+import { useProfileProvider } from '@/providers/ProfileProvider'
 
 const useZoraCreateParameters = (collection: Address) => {
   const publicClient = usePublicClient()
   const searchParams = useSearchParams()
   const { address } = useAccount()
+  const { profile } = useProfileProvider()
   const createMetadata = useCreateMetadata()
+  const creatorAddress = useCreatorAddress()
   const payoutParam = searchParams.get('payoutRecipient')
-  const defaultAdmin = searchParams.get('defaultAdmin')
 
   const fetchParameters = async (chainId: number) => {
     if (!publicClient) return
     const creatorClient = createCreatorClient({ chainId, publicClient })
     const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
     if (!cc0MusicIpfsHash) return
-
-    const payoutRecipient = isAddress(payoutParam) ? payoutParam : address
+    const connnectedProfileAddress = profile?.connectedZoraProfile?.address
+    const fallbackPayoutAddress = isAddress(payoutParam) ? payoutParam : address
+    const payoutRecipient = connnectedProfileAddress || fallbackPayoutAddress
 
     const salesConfig = getSalesConfig(
       createMetadata.isTimedSale ? 'ZoraTimedSaleStrategy' : 'ZoraFixedPriceSaleStrategy',
@@ -36,7 +40,7 @@ const useZoraCreateParameters = (collection: Address) => {
           salesConfig,
           payoutRecipient,
         },
-        account: isAddress(defaultAdmin) ? defaultAdmin : address,
+        account: creatorAddress,
       })
       newParameters = existingParameters
     } else {
@@ -51,7 +55,7 @@ const useZoraCreateParameters = (collection: Address) => {
           salesConfig,
           payoutRecipient,
         },
-        account: isAddress(defaultAdmin) ? defaultAdmin : address,
+        account: creatorAddress,
       })
       newParameters = { ...newContractParameters, functionName: 'createContract' }
     }

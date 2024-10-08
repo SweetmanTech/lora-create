@@ -10,6 +10,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { Address } from 'viem'
 import useZoraCreateParameters from './useZoraCreateParameters'
 import handleTxError from '@/lib/handleTxError'
+import useCreatorAddress from './useCreatorAddress'
 
 export default function useZoraCreate() {
   const { push } = useRouter()
@@ -19,11 +20,16 @@ export default function useZoraCreate() {
   const { switchChainAsync } = useSwitchChain()
   const [creating, setCreating] = useState<boolean>(false)
   const params = useParams()
+  const creatorAddress = useCreatorAddress()
 
   const collection = params.collection as Address | undefined
   const { fetchParameters, createMetadata } = useZoraCreateParameters(collection)
 
-  useCreateSuccess(callsStatusId, () => push(`${PROFILE_APP_URL}/${address}`), !!params.collection)
+  useCreateSuccess(
+    callsStatusId,
+    () => push(`${PROFILE_APP_URL}/${creatorAddress}`),
+    !!params.collection,
+  )
 
   const create = async (chainId) => {
     setCreating(true)
