@@ -9,7 +9,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const response = await fetch(`https://search.myco.wtf/api/profile?address=${address}`)
+    const response = await fetch(`https://api.myco.wtf/api/profile?address=${address}`)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
