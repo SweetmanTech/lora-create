@@ -6,26 +6,21 @@ import { useWriteContracts } from 'wagmi/experimental'
 import { PROFILE_APP_URL } from '@/lib/consts'
 import { usePaymasterProvider } from '@/providers/PaymasterProvider'
 import useCreateSuccess from '@/hooks/useCreateSuccess'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { Address, isAddress } from 'viem'
+import { useParams, useRouter } from 'next/navigation'
+import { Address } from 'viem'
 import useZoraCreateParameters from './useZoraCreateParameters'
 import handleTxError from '@/lib/handleTxError'
-import { useProfileProvider } from '@/providers/ProfileProvider'
+import useCreatorAddress from './useCreatorAddress'
 
 export default function useZoraCreate() {
   const { push } = useRouter()
   const { address } = useAccount()
   const { getCapabilities } = usePaymasterProvider()
-  const { profile } = useProfileProvider()
   const { data: callsStatusId, writeContractsAsync } = useWriteContracts()
   const { switchChainAsync } = useSwitchChain()
   const [creating, setCreating] = useState<boolean>(false)
   const params = useParams()
-  const searchParams = useSearchParams()
-  const defaultAdmin = searchParams.get('defaultAdmin')
-  const connnectedProfileAddress = profile?.connectedZoraProfile?.address
-  const fallbackCreatorAddress = isAddress(defaultAdmin) ? defaultAdmin : address
-  const creatorAddress = connnectedProfileAddress || fallbackCreatorAddress
+  const creatorAddress = useCreatorAddress()
 
   const collection = params.collection as Address | undefined
   const { fetchParameters, createMetadata } = useZoraCreateParameters(collection)
