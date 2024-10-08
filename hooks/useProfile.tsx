@@ -8,7 +8,7 @@ const useProfile = () => {
 
   useEffect(() => {
     const init = async () => {
-      const response = await fetch(`/api/profile?address=${address}`)
+      const response = await fetch(`https://api.myco.wtf/api/profile?address=${address}`)
       const data = await response.json()
 
       setProfile(data)
