@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useAccount, useSwitchChain, useWriteContract } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 import { useWriteContracts } from 'wagmi/experimental'
 import { PROFILE_APP_URL } from '@/lib/consts'
 import { usePaymasterProvider } from '@/providers/PaymasterProvider'
