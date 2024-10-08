@@ -21,11 +21,11 @@ const useZoraCreateParameters = (collection: Address) => {
     const creatorClient = createCreatorClient({ chainId, publicClient })
     const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
     if (!cc0MusicIpfsHash) return
-
-    const payoutRecipient =
-      profile?.connectedZoraProfile?.address || (isAddress(payoutParam) ? payoutParam : address)
-    const account =
-      profile?.connectedZoraProfile?.address || (isAddress(defaultAdmin) ? defaultAdmin : address)
+    const connnectedProfileAddress = profile?.connectedZoraProfile?.address
+    const fallbackPayoutAddress = isAddress(payoutParam) ? payoutParam : address
+    const fallbackAccountAddress = isAddress(defaultAdmin) ? defaultAdmin : address
+    const payoutRecipient = connnectedProfileAddress || fallbackPayoutAddress
+    const account = connnectedProfileAddress || fallbackAccountAddress
 
     const salesConfig = getSalesConfig(
       createMetadata.isTimedSale ? 'ZoraTimedSaleStrategy' : 'ZoraFixedPriceSaleStrategy',
