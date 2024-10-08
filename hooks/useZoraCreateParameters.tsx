@@ -5,6 +5,7 @@ import { useAccount, usePublicClient } from 'wagmi'
 import { useSearchParams } from 'next/navigation'
 import getSalesConfig from '@/lib/zora/getSalesConfig'
 import useCreateMetadata from '@/hooks/useCreateMetadata'
+import { useProfileProvider } from '@/providers/ProfileProvider'
 
 const useZoraCreateParameters = (collection: Address) => {
   const publicClient = usePublicClient()
@@ -13,6 +14,7 @@ const useZoraCreateParameters = (collection: Address) => {
   const createMetadata = useCreateMetadata()
   const payoutParam = searchParams.get('payoutRecipient')
   const defaultAdmin = searchParams.get('defaultAdmin')
+  const { profile } = useProfileProvider()
 
   const fetchParameters = async (chainId: number) => {
     if (!publicClient) return
@@ -20,7 +22,10 @@ const useZoraCreateParameters = (collection: Address) => {
     const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
     if (!cc0MusicIpfsHash) return
 
-    const payoutRecipient = isAddress(payoutParam) ? payoutParam : address
+    const payoutRecipient =
+      profile?.connectedZoraProfile?.address || (isAddress(payoutParam) ? payoutParam : address)
+    const account =
+      profile?.connectedZoraProfile?.address || (isAddress(defaultAdmin) ? defaultAdmin : address)
 
     const salesConfig = getSalesConfig(
       createMetadata.isTimedSale ? 'ZoraTimedSaleStrategy' : 'ZoraFixedPriceSaleStrategy',
@@ -36,7 +41,7 @@ const useZoraCreateParameters = (collection: Address) => {
           salesConfig,
           payoutRecipient,
         },
-        account: isAddress(defaultAdmin) ? defaultAdmin : address,
+        account,
       })
       newParameters = existingParameters
     } else {
@@ -51,7 +56,7 @@ const useZoraCreateParameters = (collection: Address) => {
           salesConfig,
           payoutRecipient,
         },
-        account: isAddress(defaultAdmin) ? defaultAdmin : address,
+        account,
       })
       newParameters = { ...newContractParameters, functionName: 'createContract' }
     }
