@@ -9,7 +9,13 @@ const useCreateMetadata = () => {
   const [animationUri, setAnimationUri] = useState<string>('')
 
   const getUri = async () => {
-    if (!name || !imageUri) return null
+    if (!name) {
+      throw new Error('Name is required')
+    }
+    
+    if (!imageUri) {
+      throw new Error('Cover Image is required')
+    }
 
     const metadata: any = {
       name,

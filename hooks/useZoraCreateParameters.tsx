@@ -22,7 +22,8 @@ const useZoraCreateParameters = (collection: Address) => {
     const creatorClient = createCreatorClient({ chainId, publicClient })
     const { uri: cc0MusicIpfsHash } = await createMetadata.getUri()
     if (!cc0MusicIpfsHash) return
-    const connnectedProfileAddress = profile?.connectedZoraProfile?.address
+    const connnectedProfileAddress =
+      profile?.connectedZoraProfile?.address || profile?.zoraProfile?.address
     const fallbackPayoutAddress = isAddress(payoutParam) ? payoutParam : address
     const payoutRecipient = connnectedProfileAddress || fallbackPayoutAddress
 
