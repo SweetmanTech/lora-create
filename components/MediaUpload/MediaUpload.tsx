@@ -57,7 +57,7 @@ const MediaUpload = () => {
     <div className="grid w-full max-w-3xl items-center gap-4">
       <div
         className={cn(
-          'w-full relative rounded-md min-h-[300px] min-w-[300px]',
+          'relative rounded-md h-[300px] w-[300px]',
           !imageUri && !animationUri && 'aspect-square',
           (loading || (!imageUri && !animationUri)) && 'border-dashed border-2 border-black',
         )}
